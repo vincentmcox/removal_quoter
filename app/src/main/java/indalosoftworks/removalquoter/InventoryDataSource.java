@@ -46,6 +46,24 @@ public class InventoryDataSource {
         database.insert(DBHelper.TABLE_INVENTORY, null, values);
     }
 
+    /**
+     * Qiped the inventory table on the database and repopulates it with the supplied
+     * MoveItem list.
+     * @param list The new inventory
+     */
+    public void insertNewInventoryList(List<MoveItem> list)
+    {
+        reInitTable();
+        for(MoveItem i : list)
+        {
+            insertItem(i);
+        }
+    }
+    private void reInitTable()
+    {
+        dbHelper.reInitialiseTable(database);
+    }
+
     public List<MoveItem> getInventory() {
 
 

@@ -31,7 +31,7 @@ public class ActRoomList extends ActionBarActivity {
 
         overList = (ExpandableListView) findViewById(R.id.expandableListView);
         rooms = ExpandableListDataProvider.getData();
-        furniture = new ArrayList<String>(rooms.keySet());
+        furniture = new ArrayList<>(rooms.keySet());
 
         adapter = new ExpandableListRoomAdapter(this, rooms, furniture);
         overList.setAdapter(adapter);
@@ -42,7 +42,8 @@ public class ActRoomList extends ActionBarActivity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 boolean result = false;
-                String thisChild = rooms.get(groupPosition).get(childPosition);
+                //MAy need to call adapter.getChild(groupPosition, childPosition)
+                String thisChild = adapter.getChild(groupPosition,childPosition).toString(); //rooms.get(groupPosition).get(childPosition);
                 // Control based on the selected child. Noted that long lines of if statements are
                 // inefficient. This should be rectified at some juncture. This is hard coded to
                 // pick up every current item that has been put into the list. If something goes

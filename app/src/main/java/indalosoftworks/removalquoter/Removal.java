@@ -26,6 +26,13 @@ public class Removal
     {
         super();
         inventory = new ArrayList<>();
+
+    }
+    public Removal(HashMap<String, Double> pricings)
+    {
+        super();
+        inventory = new ArrayList<>();
+        setPriceList(pricings);
     }
 
     public void addItem(MoveItem item)
@@ -48,9 +55,9 @@ public class Removal
         {
             totalCubage += item.getCube();
             if(item.isFragile())
-                fragileCubage += item.getCube();
+                fragileCubage += item.getCube() * item.getAmount();
             else
-                normalCubage += item.getCube();
+                normalCubage += item.getCube() * item.getAmount();
 
             if(item.getCube() >= 0.4)
             {
@@ -59,6 +66,11 @@ public class Removal
 
         }
         double price = 0.0;
+
+        //Get the actual price for the meterage
+        price += fragileCubage * getPriceList().get("price_per_fragile_meter");
+        price += normalCubage * getPriceList().get("price_per_meter");
+
         //Check to see whether the removal is an overnight's stay away (in north of UK)
         // This will likely need a more complex solution in a commercial application
         // for more accuracy.
@@ -88,7 +100,7 @@ public class Removal
 
 
         if(needPorter || totalCubage >= 10.00) {
-            price += getPriceList().get("price_per_porter_minumum");
+            price += getPriceList().get("price_per_porter_minimum");
             if (totalCubage >= 14)
                 price += getPriceList().get("price_per_porter_hourly");
             else if(totalCubage >= 18)
@@ -100,9 +112,7 @@ public class Removal
             else if(totalCubage >= 30)
                 price += getPriceList().get("price_per_porter_hourly")*5;
         }
-        //Get the actual price for the meterage
-        price += fragileCubage * getPriceList().get("price_per_fragile_meter");
-        price += normalCubage * getPriceList().get("price_per_meter");
+
 
         quoteAmount = price;
     }
@@ -187,5 +197,10 @@ public class Removal
     public List<MoveItem> getInventory()
     {
         return inventory;
+    }
+
+    public void setInventory(List<MoveItem> inventoryList)
+    {
+        inventory = inventoryList;
     }
 }

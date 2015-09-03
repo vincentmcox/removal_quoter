@@ -6,6 +6,7 @@
         android:id="@+id/child_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"/>
 

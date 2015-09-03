@@ -3,14 +3,10 @@ package indalosoftworks.removalquoter;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Parcelable;
 import android.util.Log;
+import android.widget.Toast;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -36,9 +32,8 @@ public class QuoteApp extends Application
 
     public QuoteApp()
     {
-        //database = new DBHelper(this, this);
-        removal = new Removal();
-
+        // Declare and set up the price list for the app - in a full implementation this would
+        // be taken from a server database.
         priceList = new HashMap<>();
         priceList.put("price_per_meter", 130.0); //PRice per cubic meter of normal items
         priceList.put("price_per_porter_minimum", 60.0); //Base cost of getting a porter
@@ -46,6 +41,8 @@ public class QuoteApp extends Application
         priceList.put("price_per_fragile_meter", 195.0); // Price per cubic meter of fragile items
         priceList.put("price_per_overnight_stay", 75.0); // Price levied for an overnight stay
         priceList.put("price_per_mile", 0.5); //Price per mile from a depot for over 50
+        // Must come after price list initialisation as it takes priceList as an arg.
+        removal = new Removal(priceList);
     }
 
     @Override
@@ -59,6 +56,10 @@ public class QuoteApp extends Application
         catch (SQLException e)
         {
             Log.w(e.toString() + ":", "Exception thrown at Application onCreate.");
+        }
+        if(setQuoted())
+        {
+            removal.setInventory(dataSource.getInventory());
         }
 
     }
@@ -91,7 +92,7 @@ public class QuoteApp extends Application
         editor.putInt("toCountryCode", client.getToCountryCode());
         editor.putString("mobileNumber", client.getMobileNumber());
         editor.putString("emailAddress", client.getEmailAddress());
-        editor.commit();
+        editor.apply();
     }
 
     //May need to pass a context again
@@ -110,18 +111,6 @@ public class QuoteApp extends Application
         client.setMobileNumber(prefs.getString("mobileNumber", ""));
         client.setEmailAddress(prefs.getString("emailAddress)", ""));
     }
-
-
-    private boolean loggedIn;           // is the user logged in or not.
-
-    public boolean isLoggedIn(){
-        return loggedIn;
-    }
-
-    public void setLoggedIn(boolean bool){
-        loggedIn = bool;
-    }
-
 
     /**
      * Sends the client details to the Client held in this singleton
@@ -172,8 +161,30 @@ public class QuoteApp extends Application
 
             MoveItem item = new MoveItem(cube, width, height, depth, itemName, number, isFragile);
 
-        removal.addItem(item);
         dataSource.insertItem(item);
+        removal.setInventory(dataSource.getInventory());
+
+    }
+
+    /**
+     * This is an inefficient and unelegant solution to keeping both the Removal and the Database
+     * in sync. In reality a better thought-out refactor would be more effective at solving this
+     * problem.
+     * @param index index of item to be deleted
+     */
+    public void deleteItem(int index)
+    {
+        //Some strange logic here designed to prevent IndexOutOfBounds errors, and keep both the
+        // database and the Removal object's _id attributes in line with each other.
+
+        // Remove item from Removal first. Since the _id produced by the database starts at 1 and
+        // the index of the List begins at 0, subtract one from the index
+        removal.removeItem(index-1);
+        // Drop the inventory table from the database and repopulate it with the removal inventory
+        dataSource.insertNewInventoryList(removal.getInventory());
+        // Get the removal inventory back from the database.
+        removal.setInventory(dataSource.getInventory());
+
     }
 
     /**
@@ -214,14 +225,26 @@ public class QuoteApp extends Application
         return result;
     }
 
-    public void setQuoted()
+    /**
+     * Method used for checking whether there is already a removal quoted, allowing access to the
+     * ActOvQuote activity.
+     * @return result true if there is an inventory table in the database.
+     */
+    public boolean setQuoted()
     {
-        List<MoveItem> emptyTester = removal.getInventory();
+        boolean result = false;
+        List<MoveItem> emptyTester = dataSource.getInventory();
 
         if(emptyTester.isEmpty())
-                    isQuoted = false;
+        {
+            isQuoted = false;
+        }
         else
-                    isQuoted = true;
+        {
+            isQuoted = true;
+            result = true;
+        }
+        return result;
     }
 
     boolean getQuoted()
@@ -231,14 +254,11 @@ public class QuoteApp extends Application
 
     public double getQuotePrice()
     {
+        isQuoted = true;
         return removal.getQuoteAmount();
     }
 
-    public void deleteItem(int index)
-    {
-        removal.removeItem(index);
-        dataSource.deleteItem(index);
-    }
+
 
     public List<MoveItem> getList()
     {
@@ -254,4 +274,47 @@ public class QuoteApp extends Application
         return client;
     }
 
+    /**
+     * Checks to see whether the item is fit for transport. For those items whose dimensions are
+     * specified by the user.
+     * @param height int height of the item
+     * @param width int width of the item
+     * @param depth int depth of the item
+     * @param context application context
+     * @return boolean result
+     */
+    public boolean isItemFitForTransport(int height, int width, int depth, Context context)
+    {
+        boolean result = true;
+        if(height <= 0)
+        {
+            Toast toast = Toast.makeText(context, "Please enter a height", Toast.LENGTH_LONG);
+            toast.show();
+            result = false;
+        }
+        else if(width <= 0)
+        {
+            Toast toast = Toast.makeText(context, "Please enter a width", Toast.LENGTH_LONG);
+            toast.show();
+            result = false;
+        }
+        else if(depth <= 0)
+        {
+            Toast toast = Toast.makeText(context, "Please enter a depth", Toast.LENGTH_LONG);
+            toast.show();
+            result = false;
+        }
+        else if(height >= 320 || width >= 320 || depth >= 320)
+        {
+            Toast toast = Toast.makeText(context, "Item is too big for transport!", Toast.LENGTH_LONG);
+            toast.show();
+            result = false;
+        }
+
+        return result;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
 }

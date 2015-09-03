@@ -74,7 +74,7 @@ public class ExpandableListRoomAdapter extends BaseExpandableListAdapter {
         if(convertView == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.child_list_layout, parent, false);
+            convertView = inflater.inflate(R.layout.parent_list_layout, null);
         }
         TextView groupTextView = (TextView) convertView.findViewById(R.id.parent_list);
         groupTextView.setText(groupTitle);
@@ -84,12 +84,12 @@ public class ExpandableListRoomAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         String childTitle = (String) getChild(groupPosition, childPosition);
         if(convertView == null)
         {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.child_list_layout, parent, false);
+            convertView = inflater.inflate(R.layout.child_list_layout, null);
         }
         TextView childTextView = (TextView) convertView.findViewById(R.id.child_list);
         childTextView.setText(childTitle);

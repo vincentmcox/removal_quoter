@@ -32,18 +32,18 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     private static final String DATABASE_NAME = "inventory.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String DATABASE_CREATION = "create table " +
             TABLE_INVENTORY + "(" + KEY_ID +
-            " integer primary key autoincrement, " +
+            " integer primary key, " +
             KEY_CUBAGE + " REAL, " +
             KEY_WIDTH + " REAL, " +
             KEY_HEIGHT + " REAL, " +
             KEY_DEPTH + " REAL, " +
             KEY_ITEM_NAME + " TEXT, " +
             KEY_AMOUNT + " INTEGER, " +
-            KEY_IS_FRAGILE + "INTEGER);";
+            KEY_IS_FRAGILE + " INTEGER" + ");";
 
     public DBHelper(Context context)
     {
@@ -63,6 +63,12 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.w(DBHelper.class.getName(),
                 "Upgrading database from " + oldVersion + " to "
          + newVersion + ", which will destroy any old data.");
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_INVENTORY);
+        onCreate(db);
+    }
+
+    public void reInitialiseTable(SQLiteDatabase db)
+    {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_INVENTORY);
         onCreate(db);
     }

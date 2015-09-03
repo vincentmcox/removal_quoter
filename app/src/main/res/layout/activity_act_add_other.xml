@@ -6,7 +6,115 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="indalosoftworks.removalquoter.ActAddOther">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter item details"
+        android:textStyle="bold"
+        android:textSize="12pt"
+        android:id="@+id/txt_add_other_title"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Name"
+        android:textStyle="bold"
+        android:id="@+id/txt_other_name"
+        android:layout_below="@+id/txt_add_other_title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText_itemName"
+        android:layout_below="@+id/txt_other_name"
+        android:hint="Enter name..."
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Dimensions"
+        android:textStyle="bold"
+        android:id="@+id/txt_other_dimens"
+        android:layout_below="@+id/editText_itemName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:ems="10"
+        android:hint="Enter width in cm..."
+        android:id="@+id/editText_other_enterWidth"
+        android:layout_below="@+id/txt_other_dimens"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:ems="10"
+        android:hint="Enter height in cm..."
+        android:id="@+id/editText_other_enterHeight"
+        android:layout_below="@+id/editText_other_enterWidth"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:ems="10"
+        android:hint="Enter depth in cm..."
+        android:id="@+id/editText_other_enterDepth"
+        android:layout_below="@+id/editText_other_enterHeight"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Amount"
+        android:textStyle="bold"
+        android:id="@+id/txt_other_amount"
+        android:layout_below="@+id/editText_other_enterDepth"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:ems="10"
+        android:hint="Enter the item amount..."
+        android:id="@+id/editText_other_itemAmount"
+        android:layout_below="@+id/txt_other_amount"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Is the item fragile?"
+        android:id="@+id/switch_isFragile"
+        android:layout_below="@+id/editText_other_itemAmount"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter Details"
+        android:id="@+id/btn_other_enterButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

@@ -12,9 +12,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.FileOutputStream;
+import java.util.regex.Pattern;
 
 
 public class ActPQuote extends ActionBarActivity {
@@ -45,8 +47,8 @@ public class ActPQuote extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Get the ID from the list item
-                listItemID = getIntFromItemString(parent.getSelectedItem().toString());
-                new AlertDialog.Builder(getApplicationContext())
+                listItemID = getIntFromItemString(((TextView) view).getText().toString());
+                new AlertDialog.Builder(ActPQuote.this)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle("Remove item")
                         .setMessage("Do you want to remove this item?")
@@ -125,7 +127,7 @@ public class ActPQuote extends ActionBarActivity {
     private int getIntFromItemString(String item)
     {
         int intID = -1;
-        String[] substrings = item.split(".");
+        String[] substrings = item.split(Pattern.quote("."));
         intID = Integer.parseInt(substrings[0]);
 
         return intID;

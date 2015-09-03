@@ -36,10 +36,10 @@ public class ActFurnitureTable extends ActionBarActivity {
         width = -1;
 
         //get ui references
-        enterButton.findViewById(R.id.btn_enterTable);
-        heightEntry.findViewById(R.id.height_entryTable);
-        widthEntry.findViewById(R.id.width_entryTable);
-        depthEntry.findViewById(R.id.depth_entryTable);
+        enterButton = (Button) findViewById(R.id.btn_enterTable);
+        heightEntry = (EditText) findViewById(R.id.height_entryTable);
+        widthEntry = (EditText) findViewById(R.id.width_entryTable);
+        depthEntry = (EditText) findViewById(R.id.depth_entryTable);
 
         //set up listener
         enterButtonListener = new View.OnClickListener() {
@@ -48,27 +48,7 @@ public class ActFurnitureTable extends ActionBarActivity {
                 height = Integer.parseInt(heightEntry.getText().toString());
                 width = Integer.parseInt(widthEntry.getText().toString());
                 depth = Integer.parseInt(depthEntry.getText().toString());
-                if(height <= 0)
-                {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Please enter a height", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-                else if(width <= 0)
-                {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Please enter a width", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-                else if(depth <= 0)
-                {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Please enter a depth", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-                else if(height <= 320 || width <= 320 || depth <= 320)
-                {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Item is too big for transport!", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-                else
+                if(app.isItemFitForTransport(height, width, depth, getApplicationContext()))
                 {
                     app.addItemDetails("Table", (double)width, (double)height, (double)depth, 0, 1);
                     startActivity(new Intent(getApplicationContext(), ActPQuote.class));

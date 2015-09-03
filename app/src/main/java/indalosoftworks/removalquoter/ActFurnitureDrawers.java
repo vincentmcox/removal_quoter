@@ -48,27 +48,7 @@ public class ActFurnitureDrawers extends ActionBarActivity {
                 height = Integer.parseInt(heightEntry.getText().toString());
                 width = Integer.parseInt(widthEntry.getText().toString());
                 depth = Integer.parseInt(depthEntry.getText().toString());
-                if(height <= 0)
-                {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Please enter a height", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-                else if(width <= 0)
-                {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Please enter a width", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-                else if(depth <= 0)
-                {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Please enter a depth", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-                else if(height <= 320 || width <= 320 || depth <= 320)
-                {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Item is too big for transport!", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-                else
+                if(app.isItemFitForTransport(height, width, depth, getApplicationContext()))
                 {
                     app.addItemDetails("Chest of drawers", (double)width, (double)height, (double)depth, 0, 1);
                     startActivity(new Intent(getApplicationContext(), ActPQuote.class));

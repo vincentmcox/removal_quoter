@@ -2,6 +2,7 @@ package indalosoftworks.removalquoter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,7 +20,6 @@ public class MainActivity extends ActionBarActivity {
     Button seeQuoteButton;
     View.OnClickListener produceQuoteButtonListener;
     View.OnClickListener seeQuoteButtonListener;
-    FileInputStream fis;
     QuoteApp app;
     private static Context appContext;
 
@@ -62,7 +62,7 @@ public class MainActivity extends ActionBarActivity {
         if(app.getClient() == null)
         {
             //attempt to get the client from preferences
-            app.getClientFromPreferences(getApplicationContext());
+            getClientFromPreferences(app.getClient());
 
         }
 
@@ -77,12 +77,11 @@ public class MainActivity extends ActionBarActivity {
                     //check if preferences populated client with default value.
                     Toast toast = Toast.makeText(getBaseContext(), "The button is working", Toast.LENGTH_SHORT);
                     toast.show();
-                    if(app.getClient().getEmailAddress().equals(""))
+                    if(app.getClient().getEmailAddress().equals("none"))
                     {
                         //go to the client details entry Activity, ActNQuote
                         startActivity(new Intent(getApplicationContext(), ActNQuote.class));
                     }
-
                     else{
                         startActivity(new Intent(getApplicationContext(), ActPQuote.class));
                     }
@@ -135,5 +134,23 @@ public class MainActivity extends ActionBarActivity {
     public static Context getAppContext()
     {
         return appContext;
+    }
+
+    public void getClientFromPreferences(Client client)
+    {
+        SharedPreferences prefs = getSharedPreferences("clientStored", Context.MODE_PRIVATE);
+        client = new Client();
+
+        client.setName(prefs.getString("name", ""));
+        client.setAddress1(prefs.getString("add1", ""));
+        client.setAddress2(prefs.getString("add2", ""));
+        client.setFromRegionCode((prefs.getInt("fromRegionCode", 0)));
+        client.setFromCountryCode((prefs.getInt("fromCountryCode", 0)));
+        client.setToRegionCode((prefs.getInt("ToRegionCode", 0)));
+        client.setToCountryCode((prefs.getInt("ToCountryCode", 0)));
+        client.setMobileNumber(prefs.getString("mobileNumber", ""));
+        client.setEmailAddress(prefs.getString("emailAddress)", "none"));
+
+        app.setClient(client);
     }
 }

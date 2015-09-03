@@ -44,23 +44,7 @@ public class ActFurnitureMirror extends ActionBarActivity {
             public void onClick(View v) {
                 height = Integer.parseInt(heightEntry.getText().toString());
                 width = Integer.parseInt(widthEntry.getText().toString());
-                if(height <= 0)
-                {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Please enter a height", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-                else if(width <= 0)
-                {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Please enter a width", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-
-                else if(height <= 320 || width <= 320)
-                {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Item is too big for transport!", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-                else
+                if(app.isItemFitForTransport(height, width, depth, getApplicationContext()))
                 {
                     app.addItemDetails("Box", (double)width, (double)height, (double)depth, 1, 1);
                     startActivity(new Intent(getApplicationContext(), ActPQuote.class));

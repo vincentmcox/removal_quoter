@@ -2,8 +2,10 @@ package indalosoftworks.removalquoter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,10 +72,10 @@ public class ActNQuote extends ActionBarActivity {
                 //toRegion = toRegionSpinner.getSelectedItem().toString();
 
                 //Ensure that the fields are filled in
-                if(name == null || fromAddress == null || toAddress == null ||
-                        mobilePhone == null || email == null ||
-                         fromCountry.equals("") || toCountry.equals("") ||
-                        fromRegion.equals("") || toRegion.equals(""))
+                if(name.equals("") || fromAddress.equals("") || toAddress.equals("")  ||
+                        mobilePhone.equals("") || email.equals("") ||
+                        (fromCountry.equals("UK") && toCountry.equals("UK")) ||
+                        (toCountry.equals("Spain") && fromCountry.equals("Spain"))    )
                 {
                     //Don't allow flow - in a full implementation a focus would be used
                     Toast toast = Toast.makeText(getApplicationContext(), "details not filled in",
@@ -86,7 +88,17 @@ public class ActNQuote extends ActionBarActivity {
                     //Put client details into database.
                     app.setClientDetails(nameString, emailString, fromAddressString, toAddressString, fromRegion,
                                             fromCountry, toRegion, toCountry, mobilePhoneString);
-                    app.saveClientToPreferences(getApplicationContext());
+                    saveClientToPreferences(app.getClient());
+
+                    //Show logcat messages to test the state of teh SharedPrefs
+                    SharedPreferences prefs = getSharedPreferences("clientStores", Context.MODE_PRIVATE);
+                    String testString1 = prefs.getString("name", "nothing");
+                    String testString2 = prefs.getString("emailAddress", "noEmail");
+
+                    Log.w("Prefs", "The client details from Client are: " + app.getClient().getName() + " " +
+                            app.getClient().getEmailAddress());
+                    Log.w("Prefs", "The client details from SharedPreferences are: " + testString1 + " || " +
+                            testString2);
 
                     //go to produce quote activity
                     startActivity(new Intent(getApplicationContext(), ActPQuote.class));
@@ -149,6 +161,22 @@ public class ActNQuote extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_act_nquote, menu);
         return true;
+    }
+    public void saveClientToPreferences(Client client)
+    {
+        SharedPreferences prefs = getSharedPreferences("clientStored", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("name", client.getName());
+        editor.putString("add1", client.getAddress1());
+        editor.putString("add2", client.getAddress2());
+        editor.putInt("fromRegionCode", client.getFromRegionCode());
+        editor.putInt("fromCountryCode", client.getFromCountryCode());
+        editor.putInt("toRegionCode", client.getToRegionCode());
+        editor.putInt("toCountryCode", client.getToCountryCode());
+        editor.putString("mobileNumber", client.getMobileNumber());
+        editor.putString("emailAddress", client.getEmailAddress());
+        editor.apply();
+        Log.w("Prefs", "Preferences saved and committed");
     }
 
     @Override
