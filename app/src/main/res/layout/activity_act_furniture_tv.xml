@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="indalosoftworks.removalquoter.ActFurnitureTV">
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="30 inches or less"
+        android:id="@+id/btn_smallTV"
+        android:layout_marginTop="115dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Between 31 and 40 inches"
+        android:id="@+id/btn_medTV"
+        android:layout_below="@id/btn_smallTV"
+        android:layout_centerHorizontal="true"
+         />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Between 41 and 50 inches"
+        android:id="@+id/btn_largeTV"
+        android:layout_below="@id/btn_medTV"
+        android:layout_centerHorizontal="true"
+         />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="50 inches or more"
+        android:id="@+id/btn_vLargeTV"
+        android:layout_below="@id/btn_largeTV"
+        android:layout_centerHorizontal="true"
+        />
+</RelativeLayout>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="indalosoftworks.removalquoter" >
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <application
+        android:name=".QuoteApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ActRegisterLogin"
+            android:label="@string/title_activity_act_register_login"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
+        <activity
+            android:name=".ActNQuote"
+            android:label="@string/title_activity_act_nquote"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ActOvQuote"
+            android:label="@string/title_activity_act_ov_quote"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ActPQuote"
+            android:label="@string/title_activity_act_pquote"
+            android:parentActivityName=".ActNQuote" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActNQuote" />
+        </activity>
+        <activity
+            android:name=".ActDisclaimer"
+            android:label="@string/title_activity_act_disclaimer"
+            android:parentActivityName=".ActPQuote" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActPQuote" />
+        </activity>
+        <activity
+            android:name=".ActAddItem"
+            android:label="@string/title_activity_act_add_item"
+            android:parentActivityName=".ActPQuote" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActPQuote" />
+        </activity>
+        <activity
+            android:name=".ActAddBox"
+            android:label="@string/title_activity_act_add_box"
+            android:parentActivityName=".ActAddItem" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActAddItem" />
+        </activity>
+        <activity
+            android:name=".ActVehicle"
+            android:label="@string/title_activity_act_vehicle"
+            android:parentActivityName=".ActAddItem" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActAddItem" />
+        </activity>
+        <activity
+            android:name=".ActRoomList"
+            android:label="@string/title_activity_act_room_list"
+            android:parentActivityName=".ActAddItem" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActAddItem" />
+        </activity>
+        <activity
+            android:name=".ActAddOther"
+            android:label="@string/title_activity_act_add_other"
+            android:parentActivityName=".ActAddItem" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActAddItem" />
+        </activity>
+        <activity
+            android:name=".ActFurnitureFridge"
+            android:label="@string/title_activity_act_furniture_fridge"
+            android:parentActivityName=".ActRoomList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActRoomList" />
+        </activity>
+        <activity
+            android:name=".ActFurnitureOven"
+            android:label="@string/title_activity_act_furniture_oven"
+            android:parentActivityName=".ActRoomList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActRoomList" />
+        </activity>
+        <activity
+            android:name=".ActFurnitureTable"
+            android:label="@string/title_activity_act_furniture_table"
+            android:parentActivityName=".ActRoomList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActRoomList" />
+        </activity>
+        <activity
+            android:name=".ActFurnitureChair"
+            android:label="@string/title_activity_act_furniture_chair"
+            android:parentActivityName=".ActRoomList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActRoomList" />
+        </activity>
+        <activity
+            android:name=".ActFurnitureSofa"
+            android:label="@string/title_activity_act_furniture_sofa" >
+        </activity>
+        <activity
+            android:name=".ActFurnitureBookcase"
+            android:label="@string/title_activity_act_furniture_bookcase" >
+        </activity>
+        <activity
+            android:name=".ActFurnitureTV"
+            android:label="@string/title_activity_act_furniture_tv" >
+        </activity>
+        <activity
+            android:name=".ActFurnitureLamp"
+            android:label="@string/title_activity_act_furniture_lamp"
+            android:parentActivityName=".ActRoomList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActRoomList" />
+        </activity>
+        <activity
+            android:name=".ActFurnitureBed"
+            android:label="@string/title_activity_act_furniture_bed"
+            android:parentActivityName=".ActRoomList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActRoomList" />
+        </activity>
+        <activity
+            android:name=".ActFurnitureDresser"
+            android:label="@string/title_activity_act_furniture_dresser"
+            android:parentActivityName=".ActRoomList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActRoomList" />
+        </activity>
+        <activity
+            android:name=".ActFurnitureWardrobe"
+            android:label="@string/title_activity_act_furniture_wardrobe"
+            android:parentActivityName=".ActRoomList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActRoomList" />
+        </activity>
+        <activity
+            android:name=".ActFurnitureDrawers"
+            android:label="@string/title_activity_act_furniture_drawers"
+            android:parentActivityName=".ActRoomList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActRoomList" />
+        </activity>
+        <activity
+            android:name=".ActFurnitureUnit"
+            android:label="@string/title_activity_act_furniture_unit"
+            android:parentActivityName=".ActRoomList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActRoomList" />
+        </activity>
+        <activity
+            android:name=".ActFurnitureBench"
+            android:label="@string/title_activity_act_furniture_bench"
+            android:parentActivityName=".ActRoomList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActRoomList" />
+        </activity>
+        <activity
+            android:name=".ActFurnitureBBQ"
+            android:label="@string/title_activity_act_furniture_bbq" >
+        </activity>
+        <activity
+            android:name=".ActFurnitureMachine"
+            android:label="@string/title_activity_act_furniture_machine"
+            android:parentActivityName=".ActRoomList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActRoomList" />
+        </activity>
+        <activity
+            android:name=".ActFurnitureMirror"
+            android:label="@string/title_activity_act_furniture_mirror"
+            android:parentActivityName=".ActRoomList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="indalosoftworks.removalquoter.ActRoomList" />
+        </activity>
+    </application>
+
+</manifest>

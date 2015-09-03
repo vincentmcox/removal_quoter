@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">Removal Quoter</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_act_nquote">ActNQuote</string>
+    <string name="title_activity_act_ov_quote">ActOvQuote</string>
+    <string name="act_ov_quote_price">Price goes here</string>
+    <string name="title_activity_act_pquote">ActPQuote</string>
+    <string name="title_activity_act_disclaimer">ActDisclaimer</string>
+    <string name="title_activity_act_add_item">ActAddItem</string>
+    <string name="title_activity_act_add_box">ActAddBox</string>
+    <string name="title_activity_act_vehicle">ActVehicle</string>
+    <string name="title_activity_act_room_list">ActRoomList</string>
+    <string name="title_activity_act_add_other">ActAddOther</string>
+    <string name="title_activity_act_furniture_fridge">Enter Fridge Type</string>
+    <string name="title_activity_act_furniture_oven">Enter Over Dimensions</string>
+    <string name="title_activity_act_furniture_table">Enter table size</string>
+    <string name="title_activity_act_furniture_chair">Enter chair details</string>
+    <string name="title_activity_act_furniture_sofa">Enter sofa type</string>
+    <string name="title_activity_act_furniture_bookcase">Enter bookcase dimensions</string>
+    <string name="title_activity_act_furniture_tv">Enter TV size</string>
+    <string name="title_activity_act_furniture_lamp">Enter lamp type</string>
+    <string name="title_activity_act_furniture_bed">Enter bed type</string>
+    <string name="title_activity_act_furniture_dresser">Enter dresser dimensions</string>
+    <string name="title_activity_act_furniture_wardrobe">Enter wardrobe dimensions</string>
+    <string name="title_activity_act_furniture_drawers">Enter dimensions</string>
+    <string name="title_activity_act_furniture_unit">Enter unit dimensions</string>
+    <string name="title_activity_act_furniture_bench">Enter bench dimensions</string>
+    <string name="title_activity_act_furniture_bbq">Enter BBQ Dimensions</string>
+    <string name="title_activity_act_furniture_machine">Enter machine dimensions</string>
+    <string name="title_activity_act_furniture_mirror">Enter mirror dimensions</string>
+    <string name="activity_add_item_text">Add item</string>
+
+    <!--> Strings related to furniture activities <-->
+    <string name="furniture_height_hint">Enter height in cm</string>
+    <string name="furniture_width_hint">Enter width in cm</string>
+    <string name="furniture_depth_hint">Enter depth in cm</string>
+    <string name="furniture_amount_hint">Enter amount to be transported</string>
+    <string name="furniture_enter_button">Enter item</string>
+
+    <!--> Strings and string lists for spinners <-->
+    <string name="country_prompt">Choose country</string>
+    <string-array name="country_array">
+        <item>UK</item>
+        <item>Spain</item>
+    </string-array>
+    <string name="region_prompt">Choose region</string>
+    <string-array name="country_region">
+        <item>North</item>
+        <item>South</item>
+        <item>West</item>
+        <item>East</item>
+    </string-array>
+
+</resources>
