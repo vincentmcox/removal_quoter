@@ -146,7 +146,12 @@
             />
 
     </LinearLayout>
-
+<Button
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="Show Client()"
+    android:id="@+id/btn_TESTCLIENT1"
+    android:layout_above="@+id/btn_goToPquote"/>
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

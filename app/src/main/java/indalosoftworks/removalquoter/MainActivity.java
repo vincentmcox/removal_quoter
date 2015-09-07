@@ -1,6 +1,7 @@
 package indalosoftworks.removalquoter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
@@ -18,8 +19,10 @@ public class MainActivity extends ActionBarActivity {
 
     Button produceQuoteButton;
     Button seeQuoteButton;
+    Button clearClientButton;
     View.OnClickListener produceQuoteButtonListener;
     View.OnClickListener seeQuoteButtonListener;
+    View.OnClickListener clientListener;
     QuoteApp app;
     private static Context appContext;
 
@@ -57,8 +60,13 @@ public class MainActivity extends ActionBarActivity {
 
         //set up the singleton.
         app = new QuoteApp();
+        app = (QuoteApp) getApplicationContext();
 
-        //check if there is a client
+        // check if there is a client || This code is crashing the app for some reason I cannot work out.
+        // Apparently the database object is not instantiated before the .getWriteableDatabase() method
+        // is called on the reference, but database instantiation happens as part of the QuoteApp onCreate()
+        // method. When that database instantiation method is passed to the constructor for QuoteApp, the
+        // same issue occurs.
 //        if(app.getClient() == null)
 //        {
 //            //attempt to get the client from tha database
@@ -69,14 +77,20 @@ public class MainActivity extends ActionBarActivity {
             // Set up references to the on-screen buttons
             produceQuoteButton = (Button) findViewById(R.id.btn_ProduceQuote);
             seeQuoteButton = (Button) findViewById(R.id.btn_SeeQuote);
+            clearClientButton = (Button) findViewById(R.id.btn_clearClient);
 
             // Create listeners for the buttons
             produceQuoteButtonListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+//                    if(app.getClient() == null)
+//                    {
+//                        //attempt to get the client from tha database
+//                        app.getClientFromDatabase();
+//
+//                    }
+
                     //check if preferences populated client with default value.
-                    Toast toast = Toast.makeText(getBaseContext(), "The button is working", Toast.LENGTH_SHORT);
-                    toast.show();
                     if(app.getClient() == null) //TODO test this logic
                     {
                         //go to the client details entry Activity, ActNQuote
@@ -100,11 +114,22 @@ public class MainActivity extends ActionBarActivity {
                     }
                 }
             };
+        clientListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                app.removeClientFromApp();
+                Toast toast = Toast.makeText(getBaseContext(), "Client details removed.", Toast.LENGTH_LONG);
+                toast.show();
+            }
+        };
+
+
 
 
             // Assign the listeners to the buttons.
             produceQuoteButton.setOnClickListener(produceQuoteButtonListener);
             seeQuoteButton.setOnClickListener(seeQuoteButtonListener);
+        clearClientButton.setOnClickListener(clientListener);
         }
 
 

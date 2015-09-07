@@ -11,15 +11,37 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listView_removal"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/textView_price" />
+        android:layout_below="@+id/lly_btnLayout" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/textView_price"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/lly_btnLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView_price">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Main Menu"
+            android:id="@+id/btn_Ov_MainMenu" />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Show Client"
+            android:id="@+id/btn_Ov_ShowClient" />
+    </LinearLayout>
 
 </RelativeLayout>

@@ -21,6 +21,7 @@ public class ActFurnitureLamp extends ActionBarActivity {
     String nameString;
     View.OnClickListener enterButtonListener;
     QuoteApp app;
+    int amountEntered;
 
 
     @Override
@@ -37,31 +38,30 @@ public class ActFurnitureLamp extends ActionBarActivity {
         enterButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int amountEntered = Integer.parseInt(amountEntry.getText().toString());
-                if (amountEntered <= 0) {
-                    Toast toast = Toast.makeText(getBaseContext(), "Must enter a valid amount", Toast.LENGTH_SHORT);
+                amountEntered = 0;
+
+                if(!amountEntry.getText().toString().equals("")) {
+                    Toast toast = Toast.makeText(getBaseContext(), "Must enter an amount", Toast.LENGTH_SHORT);
                     toast.show();
-                } else if (amountEntered >= 15) {
-                    Toast toast = Toast.makeText(getBaseContext(), "Too many lamps! please phone us!", Toast.LENGTH_LONG);
-                    toast.show();
-                } else {
-                    switch (radioGroup.getCheckedRadioButtonId()) {
-                        case R.id.radio_tall_lamp:
+                }
+                else {
+                    if (ensureAmountCorrect()) {
+                        amountEntered = Integer.parseInt(amountEntry.getText().toString());
+                        if (radioGroup.getCheckedRadioButtonId() == R.id.radio_tall_lamp) {
                             width = 35;
                             depth = 35;
                             height = 170;
                             nameString = "Tall lamp";
-                            break;
-                        case R.id.radio_desk_lamp:
+                        } else if (radioGroup.getCheckedRadioButtonId() == R.id.radio_desk_lamp) {
                             width = 35;
                             depth = 35;
                             height = 50;
                             nameString = "desk lamp";
-                            break;
-                    }
-                    app.addItemDetails(nameString, width, height, depth, 1, amountEntered);
-                    startActivity(new Intent(getApplicationContext(), ActPQuote.class));
+                        }
+                        app.addItemDetails(nameString, width, height, depth, 1, amountEntered);
+                        startActivity(new Intent(getApplicationContext(), ActPQuote.class));
 
+                    }
                 }
             }
         };
@@ -94,5 +94,21 @@ public class ActFurnitureLamp extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean ensureAmountCorrect()
+    {
+        boolean result = true;
+
+        if (amountEntered <= 0) {
+            Toast toast = Toast.makeText(getBaseContext(), "Must enter a valid amount", Toast.LENGTH_SHORT);
+            toast.show();
+            result = false;
+        } else if (amountEntered >= 15) {
+            Toast toast = Toast.makeText(getBaseContext(), "Too many lamps! please phone us!", Toast.LENGTH_LONG);
+            toast.show();
+            result = false;
+    }
+        return result;
     }
 }

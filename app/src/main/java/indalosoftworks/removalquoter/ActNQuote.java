@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 public class ActNQuote extends ActionBarActivity {
     //declarations
-    Button gotoButton;
+    Button gotoButton, testButton;
     EditText name, fromAddress, toAddress, mobilePhone, email;
     Spinner fromCountrySpinner, toCountrySpinner, fromRegionSpinner, toRegionSpinner;
     View.OnClickListener goToListener;
@@ -35,9 +35,16 @@ public class ActNQuote extends ActionBarActivity {
 
         app = (QuoteApp) getApplicationContext();
 
+        //If Client is not null, go to ActPQuote
+        if(app.getClient() != null)
+        {
+            startActivity(new Intent(getApplicationContext(), ActPQuote.class));
+        }
+
 
         //Get ui references
         gotoButton      = (Button) findViewById(R.id.btn_goToPquote);
+        testButton      = (Button) findViewById(R.id.btn_TESTCLIENT1);
         name            = (EditText)    findViewById(R.id.editText_name);
         fromAddress     = (EditText)    findViewById(R.id.editText_fromAddress);
         toAddress       = (EditText)    findViewById(R.id.editText_toAddress);
@@ -88,13 +95,28 @@ public class ActNQuote extends ActionBarActivity {
                     //Put client details into database.
                     app.setClientDetails(nameString, emailString, fromAddressString, toAddressString, fromRegion,
                                             fromCountry, toRegion, toCountry, mobilePhoneString);
-                    app.saveClientToDatabase(app.getClient()); //TODO
+                    //app.saveClientToDatabase(app.getClient());
 
                     //go to produce quote activity
                     startActivity(new Intent(getApplicationContext(), ActPQuote.class));
                 }
             }
         };
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(app.getClient() != null) {
+                    Toast toast = Toast.makeText(getBaseContext(), app.getClient().getName() + ": " +
+                            app.getClient().getMobileNumber() + " :: " + app.getClient().getEmailAddress(), Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                else
+                {
+                    Toast toast = Toast.makeText(getBaseContext(), "There is no Client object", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+        });
 
         //listeners for the spinners that assign the selected item string to the respective
         // String variable in the class.

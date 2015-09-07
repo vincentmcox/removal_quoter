@@ -82,7 +82,6 @@ public class ActPQuote extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 app.setQuoted();
-                //TODO Add code to call to save the removal state.
                 startActivity(new Intent(getApplicationContext(), ActOvQuote.class));
             }
         };
@@ -99,6 +98,12 @@ public class ActPQuote extends ActionBarActivity {
         return true;
     }
 
+    @Override
+    public void onResume()
+    {
+        populateRemovalList();
+        super.onResume();
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

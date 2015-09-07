@@ -53,6 +53,7 @@ public class InventoryDataSource {
 
     public void insertClient(Client client)
     {
+        //database.execSQL(DBHelper.CLIENT_CREATION);
         ContentValues values = new ContentValues();
         values.put(DBHelper.KEY_CLIENT_NAME, client.getName());
         values.put(DBHelper.KEY_ADDRESS_FROM, client.getAddress1());
@@ -64,11 +65,15 @@ public class InventoryDataSource {
         values.put(DBHelper.KEY_MOBILE_NUMBER, client.getMobileNumber());
         values.put(DBHelper.KEY_EMAIL_ADDRESS, client.getEmailAddress());
         database.insert(DBHelper.TABLE_CLIENT, null, values);
+    }
 
+    public void reInitClientTable()
+    {
+        dbHelper.dropClientTable(database);
     }
 
     /**
-     * Qiped the inventory table on the database and repopulates it with the supplied
+     * Wiped the inventory table on the database and repopulates it with the supplied
      * MoveItem list.
      * @param list The new inventory
      */

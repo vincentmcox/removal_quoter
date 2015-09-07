@@ -29,7 +29,9 @@ public class ActAddOther extends ActionBarActivity {
         setContentView(R.layout.activity_act_add_other);
 
         app = (QuoteApp) getApplicationContext();
+
         isFragile = 0;
+
 
         //Get callbacks to views
         itemNameView = (EditText) findViewById(R.id.editText_itemName);
@@ -44,10 +46,43 @@ public class ActAddOther extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 String itemName = itemNameView.getText().toString();
-                double width = Integer.parseInt(itemWidthView.getText().toString());
-                double height = Integer.parseInt(itemHeightView.getText().toString());
-                double depth = Integer.parseInt(itemDepthView.getText().toString());
-                int amount = Integer.parseInt(itemAmount.getText().toString());
+                //Set the dimensions to 0, to avoid reference errors later.
+                double width = 0.0;
+                double height = 0.0;
+                double depth = 0.0;
+                int amount = 0;
+                if (itemWidthView.getText().toString().equals(""))
+                {
+                    Toast toast = Toast.makeText(getBaseContext(), "Enter something for width!", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                    else {
+                    width = Integer.parseInt(itemWidthView.getText().toString());
+                    }
+                if (itemHeightView.getText().toString().equals(""))
+                {
+                    Toast toast = Toast.makeText(getBaseContext(), "Enter something for height!", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                else {
+                    height = Integer.parseInt(itemHeightView.getText().toString());
+                    }
+                if (itemDepthView.getText().toString().equals(""))
+                {
+                    Toast toast = Toast.makeText(getBaseContext(), "Enter something for depth!", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+
+                else {
+                    depth = Integer.parseInt(itemDepthView.getText().toString());
+                }
+                if (itemAmount.getText().toString().equals("")) {
+                    Toast toast = Toast.makeText(getBaseContext(), "Enter something for amount!", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                else {
+                    amount = Integer.parseInt(itemAmount.getText().toString());
+                }
 
                 if(isItemFit((int)height,(int)width,(int)depth,amount,itemName))
                 {

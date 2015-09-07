@@ -55,7 +55,7 @@ public class DBHelper extends SQLiteOpenHelper {
             KEY_AMOUNT + " INTEGER, " +
             KEY_IS_FRAGILE + " INTEGER" + ");";
 
-    private static final String CLIENT_CREATION = "create table " +
+    public static final String CLIENT_CREATION = "create table " +
             TABLE_CLIENT + "(" + KEY_ID +
             " integer primary key, " +
             KEY_CLIENT_NAME + " TEXT, " +

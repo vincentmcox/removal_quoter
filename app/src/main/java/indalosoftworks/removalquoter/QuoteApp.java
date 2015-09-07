@@ -44,24 +44,29 @@ public class QuoteApp extends Application
         // Must come after price list initialisation as it takes priceList as an arg.
         removal = new Removal(priceList);
 
+
+
         super.onCreate();
     }
 
     @Override
     public void onCreate()
     {
+
         dataSource = new InventoryDataSource(this);
         try {
             dataSource.open();
         }
         catch (SQLException e)
         {
-            Log.w(e.toString() + ":", "Exception thrown at Application onCreate.");
+            Log.w(e.toString() + ":", "Exception thrown at Application.");
         }
         if(setQuoted())
         {
             removal.setInventory(dataSource.getInventory());
         }
+
+        super.onCreate();
 
     }
 
@@ -123,8 +128,13 @@ public class QuoteApp extends Application
         removal.setCountryTo(toCountryCode);
         removal.setRegionTo(toRegionCode);
 
-        dataSource.insertClient(client);
+        //dataSource.insertClient(client);
 
+    }
+    public void removeClientFromApp()
+    {
+        this.client = null;
+        //dataSource.reInitClientTable();
     }
 
     /**
@@ -260,7 +270,7 @@ public class QuoteApp extends Application
 
     public Client getClient()
     {
-        return client;
+        return this.client;
     }
 
     /**

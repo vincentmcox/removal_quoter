@@ -25,4 +25,13 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Clear client details"
+        android:id="@+id/btn_clearClient"
+        android:layout_below="@+id/btn_SeeQuote"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

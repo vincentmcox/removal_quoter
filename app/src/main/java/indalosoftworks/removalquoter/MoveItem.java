@@ -28,6 +28,7 @@ public class MoveItem {
         depth = aDepth;
         itemName = name;
         amount = anAmount;
+        this.isFragile = isFragile;
     }
 
     public double getCube()

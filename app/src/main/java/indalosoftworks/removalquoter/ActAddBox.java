@@ -44,9 +44,35 @@ public class ActAddBox extends ActionBarActivity {
         enterButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                height = Integer.parseInt(heightEntry.getText().toString());
-                width = Integer.parseInt(widthEntry.getText().toString());
-                depth = Integer.parseInt(depthEntry.getText().toString());
+                //Test for empty string input - guards against int = "" errors.
+                if (heightEntry.getText().toString().equals(""))
+                {
+                    Toast toast = Toast.makeText(getBaseContext(), "Enter a height", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                else
+                {
+                    height = Integer.parseInt(heightEntry.getText().toString());
+                }
+                if (widthEntry.getText().toString().equals(""))
+                {
+                    Toast toast = Toast.makeText(getBaseContext(), "Enter a width", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                else
+                {
+                    width = Integer.parseInt(widthEntry.getText().toString());
+                }
+                if (depthEntry.getText().toString().equals(""))
+                {
+                    Toast toast = Toast.makeText(getBaseContext(), "Enter a depth", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                else
+                {
+                    depth = Integer.parseInt(depthEntry.getText().toString());
+                }
+
                 if(app.isItemFitForTransport(height, width, depth, getApplicationContext()))
                 {
                     app.addItemDetails("Box", (double)width, (double)height, (double)depth, 0, 1);

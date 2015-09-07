@@ -60,7 +60,7 @@ public class Removal
             else
                 normalCubage += item.getCube() * item.getAmount();
 
-            if(item.getCube() >= 0.4)
+            if(item.getCube() >= 0.4 && !item.getItemName().equals("Large TV") && !item.getItemName().equals("Very Large TV"))
             {
                 needPorter = true;
             }
@@ -80,22 +80,40 @@ public class Removal
         {
             price += getPriceList().get("price_per_overnight_stay");
         }
-        if(getCountryTo() == 0 || getCountryTo() == 0) //If in the UK
+        if(getCountryFrom() == 0) //If from the UK
         {
-            if( getRegionTo() == 0 || getRegionFrom() == 0) //if in North
+            if(getRegionFrom() == 0) //if in North
                  price += (279 * getPriceList().get("price_per_mile"));
-            else if( getRegionTo() == 1 || getRegionFrom() == 1) //if in West
+            else if( getRegionFrom() == 1) //if in West
                 price += (107 *getPriceList().get("price_per_mile"));
-            else if( getRegionTo() == 3 || getRegionFrom() == 3) //if in East
+            else if( getRegionFrom() == 3) //if in East
                 price += (68 * getPriceList().get("price_per_mile"));
         }
-        if(getCountryTo() == 1 || getCountryTo() == 1) //If in Spain
+        if(getCountryFrom() == 1) // If from Spain
         {
-            if( getRegionTo() == 0 || getRegionFrom() == 0) //if in North
+            if( getRegionFrom() == 0) //if in North
                 price += (558 * getPriceList().get("price_per_mile"));
-            else if( getRegionTo() == 1 || getRegionFrom() == 1) //if in West
+            else if( getRegionFrom() == 1) //if in West
                 price += (335 * getPriceList().get("price_per_mile"));
-            else if( getRegionTo() == 3 || getRegionFrom() == 3) //if in East
+            else if( getRegionFrom() == 3) //if in East
+                price += (335 * getPriceList().get("price_per_mile"));
+        }
+        if(getCountryTo() == 0) //If to the UK
+        {
+            if(getRegionTo() == 0) //if in North
+                price += (279 * getPriceList().get("price_per_mile"));
+            else if( getRegionTo() == 1) //if in West
+                price += (107 *getPriceList().get("price_per_mile"));
+            else if( getRegionTo() == 3) //if in East
+                price += (68 * getPriceList().get("price_per_mile"));
+        }
+        if(getCountryTo() == 1) // If from Spain
+        {
+            if( getRegionTo() == 0) //if in North
+                price += (558 * getPriceList().get("price_per_mile"));
+            else if( getRegionTo() == 1) //if in West
+                price += (335 * getPriceList().get("price_per_mile"));
+            else if( getRegionTo() == 3) //if in East
                 price += (335 * getPriceList().get("price_per_mile"));
         }
 

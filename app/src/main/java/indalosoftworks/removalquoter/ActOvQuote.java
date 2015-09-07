@@ -1,12 +1,16 @@
 package indalosoftworks.removalquoter;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -20,12 +24,16 @@ public class ActOvQuote extends ActionBarActivity {
     ArrayAdapter<MoveItem> moveListAdapter;
     QuoteApp app;
     TextView showPrice;
+    Button menuButton, clientButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_ov_quote);
         app = (QuoteApp) getApplicationContext();
+
+        menuButton = (Button) findViewById(R.id.btn_Ov_MainMenu);
+        clientButton = (Button) findViewById(R.id.btn_Ov_ShowClient);
 
 
         //Populate the ListView
@@ -37,6 +45,28 @@ public class ActOvQuote extends ActionBarActivity {
         priceFormat.setRoundingMode(RoundingMode.HALF_UP);
         //set the display string
         showPrice.setText("£" + priceFormat.format(app.getQuotePrice()));
+
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }
+        });
+        clientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(app.getClient() != null) {
+                    Toast toast = Toast.makeText(getBaseContext(), app.getClient().getName() + ": " +
+                            app.getClient().getMobileNumber() + " :: " + app.getClient().getEmailAddress(), Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                else
+                {
+                    Toast toast = Toast.makeText(getBaseContext(), "There is no Client object", Toast.LENGTH_LONG);
+                    toast.show();
+                }
+            }
+        });
     }
 
     @Override
