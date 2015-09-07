@@ -16,11 +16,16 @@ public class InventoryDataSource {
 
     private SQLiteDatabase database;
     private DBHelper dbHelper;
-    private String[] allColumns = {DBHelper.KEY_ID,
+    private String[] allInventoryColumns = {DBHelper.KEY_ID,
             DBHelper.KEY_CUBAGE, DBHelper.KEY_WIDTH,
             DBHelper.KEY_HEIGHT, DBHelper.KEY_DEPTH,
             DBHelper.KEY_ITEM_NAME, DBHelper.KEY_AMOUNT,
             DBHelper.KEY_IS_FRAGILE};
+    private String[] allClientColumns = {DBHelper.KEY_CLIENT_NAME,
+            DBHelper.KEY_ADDRESS_FROM, DBHelper.KEY_ADDRESS_TO,
+            DBHelper.KEY_REGION_CODE_FROM, DBHelper.KEY_COUNTRY_CODE_FROM,
+            DBHelper.KEY_REGION_CODE_TO, DBHelper.KEY_COUNTRY_CODE_TO,
+            DBHelper.KEY_MOBILE_NUMBER, DBHelper.KEY_EMAIL_ADDRESS};
 
     public InventoryDataSource(Context context) {
         dbHelper = new DBHelper(context);
@@ -46,6 +51,22 @@ public class InventoryDataSource {
         database.insert(DBHelper.TABLE_INVENTORY, null, values);
     }
 
+    public void insertClient(Client client)
+    {
+        ContentValues values = new ContentValues();
+        values.put(DBHelper.KEY_CLIENT_NAME, client.getName());
+        values.put(DBHelper.KEY_ADDRESS_FROM, client.getAddress1());
+        values.put(DBHelper.KEY_ADDRESS_TO, client.getAddress2());
+        values.put(DBHelper.KEY_REGION_CODE_FROM, client.getFromCountryCode());
+        values.put(DBHelper.KEY_COUNTRY_CODE_FROM, client.getFromCountryCode());
+        values.put(DBHelper.KEY_REGION_CODE_TO, client.getToRegionCode());
+        values.put(DBHelper.KEY_COUNTRY_CODE_TO, client.getToCountryCode());
+        values.put(DBHelper.KEY_MOBILE_NUMBER, client.getMobileNumber());
+        values.put(DBHelper.KEY_EMAIL_ADDRESS, client.getEmailAddress());
+        database.insert(DBHelper.TABLE_CLIENT, null, values);
+
+    }
+
     /**
      * Qiped the inventory table on the database and repopulates it with the supplied
      * MoveItem list.
@@ -53,23 +74,24 @@ public class InventoryDataSource {
      */
     public void insertNewInventoryList(List<MoveItem> list)
     {
-        reInitTable();
+        reInitInventoryTable();
         for(MoveItem i : list)
         {
             insertItem(i);
         }
     }
-    private void reInitTable()
+    private void reInitInventoryTable()
     {
-        dbHelper.reInitialiseTable(database);
+        dbHelper.reInitialiseInventoryTable(database);
     }
+
 
     public List<MoveItem> getInventory() {
 
 
     List<MoveItem> inventory = new ArrayList<>();
 
-    Cursor cursor = database.query(DBHelper.TABLE_INVENTORY, allColumns,
+    Cursor cursor = database.query(DBHelper.TABLE_INVENTORY, allInventoryColumns,
             null, null, null, null, null);
 
     cursor.moveToFirst();
@@ -100,9 +122,36 @@ public class InventoryDataSource {
         return item;
     }
 
+    public int getClientCount()
+    {
+        Cursor cursor = database.rawQuery("SELECT * FROM " + DBHelper.TABLE_CLIENT, null);
+        int result = cursor.getCount();
+        cursor.close();
+        return result;
+    }
+
     public void deleteItem(int _id)
     {
         database.delete(DBHelper.TABLE_INVENTORY, DBHelper.KEY_ID + " = " + _id, null);
+    }
+
+    public Client getClient()
+    {
+        Cursor cursor = database.query(DBHelper.TABLE_CLIENT, allClientColumns,
+                null, null, null, null, null);
+        cursor.moveToFirst();
+        Client client = new Client();
+        client.setName(cursor.getString(1));
+        client.setAddress1(cursor.getString(2));
+        client.setAddress2(cursor.getString(3));
+        client.setFromRegionCode(cursor.getInt(4));
+        client.setFromCountryCode(cursor.getInt(5));
+        client.setToRegionCode(cursor.getInt(6));
+        client.setToCountryCode(cursor.getInt(7));
+        client.setMobileNumber(cursor.getString(8));
+        client.setEmailAddress(cursor.getString(9));
+
+        return client;
     }
 
 }

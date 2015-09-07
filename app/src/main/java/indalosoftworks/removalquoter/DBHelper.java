@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class DBHelper extends SQLiteOpenHelper {
 
-    //TODO complete re-do!
+    // Inventory table strings
     public static final String TABLE_INVENTORY = "inventory";
     public static final String KEY_ID = "_id";
     public static final String KEY_ITEM_NAME = "item_name";
@@ -29,12 +29,22 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String KEY_WIDTH = "width";
     public static final String KEY_DEPTH = "depth";
     public static final String KEY_AMOUNT = "amount";
-
+    // Client table strings
+    public static final String TABLE_CLIENT = "client";
+    public static final String KEY_CLIENT_NAME = "client_name";
+    public static final String KEY_ADDRESS_FROM = "address_from";
+    public static final String KEY_ADDRESS_TO = "address_to";
+    public static final String KEY_REGION_CODE_FROM = "region_from";
+    public static final String KEY_COUNTRY_CODE_FROM = "country_from";
+    public static final String KEY_REGION_CODE_TO = "region_to";
+    public static final String KEY_COUNTRY_CODE_TO = "country_to";
+    public static final String KEY_MOBILE_NUMBER = "mobile_number";
+    public static final String KEY_EMAIL_ADDRESS = "email";
 
     private static final String DATABASE_NAME = "inventory.db";
     private static final int DATABASE_VERSION = 2;
 
-    private static final String DATABASE_CREATION = "create table " +
+    private static final String INVENTORY_CREATION = "create table " +
             TABLE_INVENTORY + "(" + KEY_ID +
             " integer primary key, " +
             KEY_CUBAGE + " REAL, " +
@@ -45,6 +55,20 @@ public class DBHelper extends SQLiteOpenHelper {
             KEY_AMOUNT + " INTEGER, " +
             KEY_IS_FRAGILE + " INTEGER" + ");";
 
+    private static final String CLIENT_CREATION = "create table " +
+            TABLE_CLIENT + "(" + KEY_ID +
+            " integer primary key, " +
+            KEY_CLIENT_NAME + " TEXT, " +
+            KEY_ADDRESS_FROM + " TEXT, " +
+            KEY_ADDRESS_TO + " TEXT, " +
+            KEY_REGION_CODE_FROM + " INTEGER, " +
+            KEY_COUNTRY_CODE_FROM + " INTEGER, " +
+            KEY_REGION_CODE_TO + " INTEGER, " +
+            KEY_COUNTRY_CODE_TO + " INTEGER, " +
+            KEY_MOBILE_NUMBER + " TEXT, " +
+            KEY_EMAIL_ADDRESS + " TEXT);";
+
+
     public DBHelper(Context context)
     {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -54,7 +78,8 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        db.execSQL(DATABASE_CREATION);
+        db.execSQL(INVENTORY_CREATION);
+        //db.execSQL(CLIENT_CREATION);
     }
 
     @Override
@@ -64,13 +89,20 @@ public class DBHelper extends SQLiteOpenHelper {
                 "Upgrading database from " + oldVersion + " to "
          + newVersion + ", which will destroy any old data.");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_INVENTORY);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLIENT);
         onCreate(db);
     }
 
-    public void reInitialiseTable(SQLiteDatabase db)
+    public void reInitialiseInventoryTable(SQLiteDatabase db)
     {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_INVENTORY);
-        onCreate(db);
+        db.execSQL(INVENTORY_CREATION);
+    }
+
+    public void dropClientTable(SQLiteDatabase db)
+    {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLIENT);
+        db.execSQL(CLIENT_CREATION);
     }
 
 }

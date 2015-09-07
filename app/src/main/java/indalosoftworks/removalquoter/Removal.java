@@ -46,6 +46,7 @@ public class Removal
      */
     private void makeQuote()
     {
+
         double totalCubage = 0.0;
         double fragileCubage = 0.0;
         double normalCubage = 0.0;
@@ -74,8 +75,8 @@ public class Removal
         //Check to see whether the removal is an overnight's stay away (in north of UK)
         // This will likely need a more complex solution in a commercial application
         // for more accuracy.
-        if(getCountryFrom() == 0 || getCountryTo() == 0
-                && getRegionFrom() == 0 || getRegionTo() == 0)
+        if(getCountryFrom() == 0 && getRegionFrom() == 0
+                || getCountryTo() == 0 && getRegionTo() == 0)
         {
             price += getPriceList().get("price_per_overnight_stay");
         }
@@ -101,13 +102,13 @@ public class Removal
 
         if(needPorter || totalCubage >= 10.00) {
             price += getPriceList().get("price_per_porter_minimum");
-            if (totalCubage >= 14)
+            if (totalCubage >= 14 && totalCubage < 18)
                 price += getPriceList().get("price_per_porter_hourly");
-            else if(totalCubage >= 18)
+            else if(totalCubage >= 18 && totalCubage < 22)
                 price += getPriceList().get("price_per_porter_hourly")*2;
-            else if(totalCubage >= 22)
+            else if(totalCubage >= 22 && totalCubage < 26)
                 price += getPriceList().get("price_per_porter_hourly")*3;
-            else if(totalCubage >= 26)
+            else if(totalCubage >= 26 && totalCubage < 30)
                 price += getPriceList().get("price_per_porter_hourly")*4;
             else if(totalCubage >= 30)
                 price += getPriceList().get("price_per_porter_hourly")*5;

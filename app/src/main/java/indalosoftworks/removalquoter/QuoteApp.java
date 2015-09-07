@@ -23,7 +23,7 @@ public class QuoteApp extends Application
 
 
     private InventoryDataSource dataSource;
-    private Client client = null;
+    private Client client;
     private Removal removal;
     private boolean isQuoted;
     private HashMap<String, Double> priceList;
@@ -43,12 +43,13 @@ public class QuoteApp extends Application
         priceList.put("price_per_mile", 0.5); //Price per mile from a depot for over 50
         // Must come after price list initialisation as it takes priceList as an arg.
         removal = new Removal(priceList);
+
+        super.onCreate();
     }
 
     @Override
     public void onCreate()
     {
-        super.onCreate();
         dataSource = new InventoryDataSource(this);
         try {
             dataSource.open();
@@ -79,37 +80,18 @@ public class QuoteApp extends Application
 //    }
 
     //May need to pass a context into here
-    public void saveClientToPreferences(Context context)
+    public void saveClientToDatabase(Client aClient)
     {
-        SharedPreferences prefs = context.getSharedPreferences("clientStored", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("name", client.getName());
-        editor.putString("add1", client.getAddress1());
-        editor.putString("add2", client.getAddress2());
-        editor.putInt("fromRegionCode", client.getFromRegionCode());
-        editor.putInt("fromCountryCode", client.getFromCountryCode());
-        editor.putInt("toRegionCode", client.getToRegionCode());
-        editor.putInt("toCountryCode", client.getToCountryCode());
-        editor.putString("mobileNumber", client.getMobileNumber());
-        editor.putString("emailAddress", client.getEmailAddress());
-        editor.apply();
+
     }
 
     //May need to pass a context again
-    public void getClientFromPreferences(Context context)
+    public void getClientFromDatabase()
     {
-        SharedPreferences prefs = context.getSharedPreferences("clientStored", Context.MODE_PRIVATE);
-        client = new Client();
-
-        client.setName(prefs.getString("name", ""));
-        client.setAddress1(prefs.getString("add1", ""));
-        client.setAddress2(prefs.getString("add2", ""));
-        client.setFromRegionCode((prefs.getInt("fromRegionCode", 0)));
-        client.setFromCountryCode((prefs.getInt("fromCountryCode", 0)));
-        client.setToRegionCode((prefs.getInt("ToRegionCode", 0)));
-        client.setToCountryCode((prefs.getInt("ToCountryCode", 0)));
-        client.setMobileNumber(prefs.getString("mobileNumber", ""));
-        client.setEmailAddress(prefs.getString("emailAddress)", ""));
+        if(dataSource.getClientCount() >= 1)
+        {
+            this.client = dataSource.getClient();
+        }
     }
 
     /**
@@ -135,6 +117,13 @@ public class QuoteApp extends Application
         int toRegionCode = getRegionCode(toRegion);
         this.client = new Client(name, add1, add2, fromRegionCode, fromCountryCode,
                 toRegionCode, toCountryCode, mobNumber, email);
+
+        removal.setCountryFrom(fromCountryCode);
+        removal.setRegionFrom(fromRegionCode);
+        removal.setCountryTo(toCountryCode);
+        removal.setRegionTo(toRegionCode);
+
+        dataSource.insertClient(client);
 
     }
 
@@ -235,7 +224,7 @@ public class QuoteApp extends Application
         boolean result = false;
         List<MoveItem> emptyTester = dataSource.getInventory();
 
-        if(emptyTester.isEmpty())
+        if(emptyTester.size() == 0 || emptyTester == null)
         {
             isQuoted = false;
         }

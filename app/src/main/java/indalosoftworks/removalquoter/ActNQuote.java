@@ -88,17 +88,7 @@ public class ActNQuote extends ActionBarActivity {
                     //Put client details into database.
                     app.setClientDetails(nameString, emailString, fromAddressString, toAddressString, fromRegion,
                                             fromCountry, toRegion, toCountry, mobilePhoneString);
-                    saveClientToPreferences(app.getClient());
-
-                    //Show logcat messages to test the state of teh SharedPrefs
-                    SharedPreferences prefs = getSharedPreferences("clientStores", Context.MODE_PRIVATE);
-                    String testString1 = prefs.getString("name", "nothing");
-                    String testString2 = prefs.getString("emailAddress", "noEmail");
-
-                    Log.w("Prefs", "The client details from Client are: " + app.getClient().getName() + " " +
-                            app.getClient().getEmailAddress());
-                    Log.w("Prefs", "The client details from SharedPreferences are: " + testString1 + " || " +
-                            testString2);
+                    app.saveClientToDatabase(app.getClient()); //TODO
 
                     //go to produce quote activity
                     startActivity(new Intent(getApplicationContext(), ActPQuote.class));
@@ -161,22 +151,6 @@ public class ActNQuote extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_act_nquote, menu);
         return true;
-    }
-    public void saveClientToPreferences(Client client)
-    {
-        SharedPreferences prefs = getSharedPreferences("clientStored", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("name", client.getName());
-        editor.putString("add1", client.getAddress1());
-        editor.putString("add2", client.getAddress2());
-        editor.putInt("fromRegionCode", client.getFromRegionCode());
-        editor.putInt("fromCountryCode", client.getFromCountryCode());
-        editor.putInt("toRegionCode", client.getToRegionCode());
-        editor.putInt("toCountryCode", client.getToCountryCode());
-        editor.putString("mobileNumber", client.getMobileNumber());
-        editor.putString("emailAddress", client.getEmailAddress());
-        editor.apply();
-        Log.w("Prefs", "Preferences saved and committed");
     }
 
     @Override

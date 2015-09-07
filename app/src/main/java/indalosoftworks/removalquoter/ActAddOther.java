@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
 
 public class ActAddOther extends ActionBarActivity {
@@ -48,9 +49,11 @@ public class ActAddOther extends ActionBarActivity {
                 double depth = Integer.parseInt(itemDepthView.getText().toString());
                 int amount = Integer.parseInt(itemAmount.getText().toString());
 
-                app.addItemDetails(itemName,(double)width,(double)height,(double)depth,isFragile,amount);
-
-                startActivity(new Intent(getApplicationContext(), ActPQuote.class));
+                if(isItemFit((int)height,(int)width,(int)depth,amount,itemName))
+                {
+                    app.addItemDetails(itemName,(double)width,(double)height,(double)depth,isFragile,amount);
+                    startActivity(new Intent(getApplicationContext(), ActPQuote.class));
+                }
             }
         };
         switchListener = new CompoundButton.OnCheckedChangeListener() {
@@ -88,5 +91,50 @@ public class ActAddOther extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean isItemFit(int height, int width, int depth, int amount, String name)
+    {
+        boolean result = true;
+
+        if(height <= 0)
+        {
+            Toast toast = Toast.makeText(getBaseContext(), "Please enter a height", Toast.LENGTH_LONG);
+            toast.show();
+            result = false;
+        }
+        else if(width <= 0)
+        {
+            Toast toast = Toast.makeText(getBaseContext(), "Please enter a width", Toast.LENGTH_LONG);
+            toast.show();
+            result = false;
+        }
+        else if(depth <= 0)
+        {
+            Toast toast = Toast.makeText(getBaseContext(), "Please enter a depth", Toast.LENGTH_LONG);
+            toast.show();
+            result = false;
+        }
+        else if(height >= 320 || width >= 320 || depth >= 320)
+        {
+            Toast toast = Toast.makeText(getBaseContext(), "Item is too big for transport!", Toast.LENGTH_LONG);
+            toast.show();
+            result = false;
+        }
+        else if (amount <= 0)
+        {
+            Toast toast = Toast.makeText(getBaseContext(), "You must enter a positive amount!", Toast.LENGTH_LONG);
+            toast.show();
+            result = false;
+        }
+        else if (name.equals(""))
+        {
+            Toast toast = Toast.makeText(getBaseContext(), "Please enter a name for th item.", Toast.LENGTH_LONG);
+            toast.show();
+            result = false;
+        }
+
+        return result;
+
     }
 }
