@@ -21,6 +21,7 @@ public class ActFurnitureChair extends ActionBarActivity {
     String nameString;
     View.OnClickListener enterButtonListener;
     QuoteApp app;
+    int amountEntered;
 
 
 
@@ -39,41 +40,38 @@ public class ActFurnitureChair extends ActionBarActivity {
         enterButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int amountEntered = Integer.parseInt(amountEntry.getText().toString());
-                if(amountEntered <= 0)
+
+                if(amountEntry.getText().toString().equals(""))
                 {
-                    Toast toast = Toast.makeText(getBaseContext(), "Must enter a valid amount", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                else if (amountEntered >= 40)
-                {
-                    Toast toast = Toast.makeText(getBaseContext(), "Too many chairs! please phone us!", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getBaseContext(), "Must enter an amount!", Toast.LENGTH_LONG);
                     toast.show();
                 }
                 else {
-                    //TODO finish business logic in here.
-                    switch (radioGroup.getCheckedRadioButtonId()) {
-                        case R.id.radio_armchair:
-                            width = 89;
-                            depth = 89;
-                            height = 110;
-                            nameString = "Armchair";
-                            break;
-                        case R.id.radio_desk_chair:
-                            width = 46;
-                            depth = 46;
-                            height = 110;
-                            nameString = "Desk Chair";
-                            break;
-                        case R.id.radio_dining_chair:
-                            width = 46;
-                            depth = 46;
-                            height = 100;
-                            nameString = "Dining Chair";
-                            break;
+                    amountEntered = Integer.parseInt(amountEntry.getText().toString());
+                    if(ensureAmountCorrect()) {
+                        switch (radioGroup.getCheckedRadioButtonId()) {
+                            case R.id.radio_armchair:
+                                width = 89;
+                                depth = 89;
+                                height = 110;
+                                nameString = "Armchair";
+                                break;
+                            case R.id.radio_desk_chair:
+                                width = 46;
+                                depth = 46;
+                                height = 110;
+                                nameString = "Desk Chair";
+                                break;
+                            case R.id.radio_dining_chair:
+                                width = 46;
+                                depth = 46;
+                                height = 100;
+                                nameString = "Dining Chair";
+                                break;
+                        }
+                        app.addItemDetails(nameString, width, height, depth, 0, amountEntered);
+                        startActivity(new Intent(getApplicationContext(), ActPQuote.class));
                     }
-                    app.addItemDetails(nameString, width, height, depth, 0, amountEntered);
-                    startActivity(new Intent(getApplicationContext(), ActPQuote.class));
                 }
 
             }
@@ -106,5 +104,29 @@ public class ActFurnitureChair extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean ensureAmountCorrect()
+    {
+        boolean result = true;
+
+        if(radioGroup.getCheckedRadioButtonId() != R.id.radio_desk_chair
+                && radioGroup.getCheckedRadioButtonId() != R.id.radio_dining_chair
+                && radioGroup.getCheckedRadioButtonId() != R.id.radio_armchair)
+        {
+            Toast toast = Toast.makeText(getBaseContext(), "Please select a chair type", Toast.LENGTH_LONG);
+            toast.show();
+            result = false;
+        }
+        if (amountEntered <= 0) {
+            Toast toast = Toast.makeText(getBaseContext(), "Must enter a valid amount", Toast.LENGTH_SHORT);
+            toast.show();
+            result = false;
+        } else if (amountEntered >= 15) {
+            Toast toast = Toast.makeText(getBaseContext(), "Too many lamps! please phone us!", Toast.LENGTH_LONG);
+            toast.show();
+            result = false;
+        }
+        return result;
     }
 }

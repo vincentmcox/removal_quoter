@@ -31,7 +31,7 @@ public class ActVehicle extends ActionBarActivity {
         quadBikeListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                app.addItemDetails("Quad Bike", 92, 101, 167, 0, 1);
+                app.addItemDetails("Quad Bike", 92, 101, 180, 0, 1);
                 startActivity(new Intent(getApplicationContext(), ActPQuote.class));
 
             }

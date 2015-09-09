@@ -40,13 +40,13 @@ public class ActFurnitureLamp extends ActionBarActivity {
             public void onClick(View v) {
                 amountEntered = 0;
 
-                if(!amountEntry.getText().toString().equals("")) {
+                if(amountEntry.getText().toString().equals("")) {
                     Toast toast = Toast.makeText(getBaseContext(), "Must enter an amount", Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 else {
+                    amountEntered = Integer.parseInt(amountEntry.getText().toString());
                     if (ensureAmountCorrect()) {
-                        amountEntered = Integer.parseInt(amountEntry.getText().toString());
                         if (radioGroup.getCheckedRadioButtonId() == R.id.radio_tall_lamp) {
                             width = 35;
                             depth = 35;
@@ -100,6 +100,12 @@ public class ActFurnitureLamp extends ActionBarActivity {
     {
         boolean result = true;
 
+        if(radioGroup.getCheckedRadioButtonId() != R.id.radio_tall_lamp && radioGroup.getCheckedRadioButtonId() != R.id.radio_desk_lamp)
+        {
+            Toast toast = Toast.makeText(getBaseContext(), "Please select a lamp type", Toast.LENGTH_LONG);
+            toast.show();
+            result = false;
+        }
         if (amountEntered <= 0) {
             Toast toast = Toast.makeText(getBaseContext(), "Must enter a valid amount", Toast.LENGTH_SHORT);
             toast.show();

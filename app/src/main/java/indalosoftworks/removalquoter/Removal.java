@@ -60,7 +60,13 @@ public class Removal
             else
                 normalCubage += item.getCube() * item.getAmount();
 
-            if(item.getCube() >= 0.4 && !item.getItemName().equals("Large TV") && !item.getItemName().equals("Very Large TV"))
+            if(item.getCube() >= 0.4
+                    && !item.getItemName().equals("Large TV")
+                    && !item.getItemName().equals("Very Large TV")
+                    && !item.getItemName().equals("Bicycle")
+                    && !item.getItemName().equals("Mobility Scooter")
+                    && !item.getItemName().equals("Motorbike")
+                    && !item.getItemName().equals("Quad Bike"))
             {
                 needPorter = true;
             }
