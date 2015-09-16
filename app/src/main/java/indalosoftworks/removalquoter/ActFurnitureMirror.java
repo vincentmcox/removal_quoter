@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
+/**
+ * Activity to input the fragile mirror item into a removal
+ */
 public class ActFurnitureMirror extends ActionBarActivity {
     //Declarations for ui elements
     Button enterButton;
@@ -27,6 +29,8 @@ public class ActFurnitureMirror extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_furniture_mirror);
+
+        //Get reference to the global app variable
         app = (QuoteApp) getApplicationContext();
 
         height = -1;
@@ -42,6 +46,7 @@ public class ActFurnitureMirror extends ActionBarActivity {
         enterButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //check for empty strings
                 if (heightEntry.getText().toString().equals(""))
                 {
                     Toast toast = Toast.makeText(getBaseContext(), "Enter a height", Toast.LENGTH_LONG);
@@ -60,6 +65,8 @@ public class ActFurnitureMirror extends ActionBarActivity {
                 {
                     width = Integer.parseInt(widthEntry.getText().toString());
                 }
+
+                //Check item dimensions are fit for transport, then input them into the app object.
                 if(app.isItemFitForTransport(height, width, depth, getApplicationContext()))
                 {
                     app.addItemDetails("Mirror", (double)width, (double)height, (double)depth, 1, 1);

@@ -18,7 +18,10 @@ import android.widget.Toast;
 import java.io.FileOutputStream;
 import java.util.regex.Pattern;
 
-
+/**
+ * Activity that displays current removal items in a list and allows the user to get a quote by
+ * starting the ActOvQuote activity, or add more items by starting the ActAddItem activity.
+ */
 public class ActPQuote extends ActionBarActivity {
     ListView removalList;
     Button addItemButton, allAddedButton;
@@ -31,12 +34,14 @@ public class ActPQuote extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_pquote);
+
+        //Get reference to the global app variable.
         app = (QuoteApp) getApplicationContext();
 
 
+        //Get UI references
         addItemButton = (Button) findViewById(R.id.btn_addItem);
         allAddedButton= (Button) findViewById(R.id.btn_allAdded);
-
         removalList = (ListView) findViewById(R.id.listView_produceQuote);
         removalList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
@@ -48,6 +53,7 @@ public class ActPQuote extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Get the ID from the list item
                 listItemID = getIntFromItemString(((TextView) view).getText().toString());
+                //Show a dialog box for deletion of the item clicked
                 new AlertDialog.Builder(ActPQuote.this)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle("Remove item")
@@ -71,7 +77,7 @@ public class ActPQuote extends ActionBarActivity {
                 populateRemovalList();
             }
         });
-        //set up button listners
+        //set up button listeners
         addItemListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +92,7 @@ public class ActPQuote extends ActionBarActivity {
             }
         };
 
+        //attach listeners to buttons
         addItemButton.setOnClickListener(addItemListener);
         allAddedButton.setOnClickListener(allAddedListener);
 
@@ -120,7 +127,7 @@ public class ActPQuote extends ActionBarActivity {
     }
 
     public void populateRemovalList() {
-        moveListAdapter = new ArrayAdapter<MoveItem>(this, android.R.layout.simple_list_item_1, app.getList());
+        moveListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, app.getList());
         removalList.setAdapter(moveListAdapter);
     }
 
@@ -131,7 +138,7 @@ public class ActPQuote extends ActionBarActivity {
      */
     private int getIntFromItemString(String item)
     {
-        int intID = -1;
+        int intID;
         String[] substrings = item.split(Pattern.quote("."));
         intID = Integer.parseInt(substrings[0]);
 

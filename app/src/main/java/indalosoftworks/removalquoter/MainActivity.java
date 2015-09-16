@@ -14,7 +14,10 @@ import android.widget.Toast;
 
 import java.io.FileInputStream;
 
-
+/**
+ * First activity started when the app is started out. Fucntions as a navigation menu and
+ * performs some setup and logic for the app.
+ */
 public class MainActivity extends ActionBarActivity {
 
     Button produceQuoteButton;
@@ -31,32 +34,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Get application context
         appContext = getApplicationContext();
-
-        // Test to see whether the user is logged in or not, if not then the user is taken to
-        // the login/register activity. Information attained from QuoteApp application context.
-        //QuoteApp thisAppRun = ((QuoteApp)getApplicationContext());
-        //boolean state = thisAppRun.isLoggedIn();
-
-
-
-        // Test to see whether the user has entered an email address which has been stored by the
-        // system.
-//        boolean state = true;
-//        try{
-//            fis = openFileInput("email_store");
-//        }
-//        catch(FileNotFoundException e)
-//        {
-//            state = false;
-//        }
-//        if(!state)
-//        {
-//            //Go to ActRegisterLogin
-//            startActivity(new Intent(getApplicationContext(), ActRegisterLogin.class));
-//        }
-
-
 
         //set up the singleton.
         app = new QuoteApp();
@@ -83,12 +62,6 @@ public class MainActivity extends ActionBarActivity {
             produceQuoteButtonListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    if(app.getClient() == null)
-//                    {
-//                        //attempt to get the client from tha database
-//                        app.getClientFromDatabase();
-//
-//                    }
 
                     //check if preferences populated client with default value.
                     if(app.getClient() == null) //TODO test this logic

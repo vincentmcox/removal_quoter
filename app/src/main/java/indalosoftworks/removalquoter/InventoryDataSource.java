@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * This class holds the Database reference and specifies methods using an instance of DBHelper
+ * to operate on the database. Called from QuoteApp.
  */
 public class InventoryDataSource {
 
@@ -39,6 +40,10 @@ public class InventoryDataSource {
         dbHelper.close();
     }
 
+    /**
+     * Inserts a MoveItem object into the database
+     * @param item item to be inserted
+     */
     public void insertItem(MoveItem item) {
         ContentValues values = new ContentValues();
         values.put(DBHelper.KEY_CUBAGE, item.getCube());
@@ -51,6 +56,10 @@ public class InventoryDataSource {
         database.insert(DBHelper.TABLE_INVENTORY, null, values);
     }
 
+    /**
+     * Inserts a Client object into the database
+     * @param client client to be inserter
+     */
     public void insertClient(Client client)
     {
         //database.execSQL(DBHelper.CLIENT_CREATION);
@@ -67,6 +76,9 @@ public class InventoryDataSource {
         database.insert(DBHelper.TABLE_CLIENT, null, values);
     }
 
+    /**
+     * Refreshes the Client table by calling dropClientTable in the DBHelper
+     */
     public void reInitClientTable()
     {
         dbHelper.dropClientTable(database);
@@ -85,20 +97,25 @@ public class InventoryDataSource {
             insertItem(i);
         }
     }
+
+    /**
+     * Reinitialises the inventory table through the DBHelper
+     */
     private void reInitInventoryTable()
     {
         dbHelper.reInitialiseInventoryTable(database);
     }
 
 
+    /**
+     * Returns the inventory in the form of a List<MoveItem>
+     * @return inventory in the database
+     */
     public List<MoveItem> getInventory() {
-
-
     List<MoveItem> inventory = new ArrayList<>();
 
     Cursor cursor = database.query(DBHelper.TABLE_INVENTORY, allInventoryColumns,
             null, null, null, null, null);
-
     cursor.moveToFirst();
         while (!cursor.isAfterLast())
         {
@@ -106,12 +123,16 @@ public class InventoryDataSource {
             inventory.add(item);
             cursor.moveToNext();
         }
-
         cursor.close();
 
         return inventory;
 }
 
+    /**
+     * Helper method to get create a Client object from a Cursor.
+     * @param cursor cursor from the TABLE_CLIENT table
+     * @return a MoveItem object
+     */
     private MoveItem itemFromCursor(Cursor cursor)
     {
         MoveItem item = new MoveItem();
@@ -127,6 +148,10 @@ public class InventoryDataSource {
         return item;
     }
 
+    /**
+     * Counts the number of clients in the Client table by checking the cursor.
+     * @return the number of rows in the client table
+     */
     public int getClientCount()
     {
         Cursor cursor = database.rawQuery("SELECT * FROM " + DBHelper.TABLE_CLIENT, null);
@@ -135,11 +160,20 @@ public class InventoryDataSource {
         return result;
     }
 
+    /**
+     * Removes the item with the id specified from the database.
+     * @param _id the id of the item to be removed.
+     */
     public void deleteItem(int _id)
     {
         database.delete(DBHelper.TABLE_INVENTORY, DBHelper.KEY_ID + " = " + _id, null);
     }
 
+    /**
+     * Returns the first client in the Client table database. It is designed to only have
+     * one Client in the database at any one point
+     * @return the client in the database
+     */
     public Client getClient()
     {
         Cursor cursor = database.query(DBHelper.TABLE_CLIENT, allClientColumns,

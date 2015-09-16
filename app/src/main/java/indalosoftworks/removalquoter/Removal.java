@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * Class that stores data and the logic for processing it
  * to produce a quote.
- *
  */
 public class Removal
 {
@@ -60,7 +59,9 @@ public class Removal
             else
                 normalCubage += item.getCube() * item.getAmount();
 
+            //Is the item too big for one person to carry?
             if(item.getCube() >= 0.4
+                    //Exceptions for large items:
                     && !item.getItemName().equals("Large TV")
                     && !item.getItemName().equals("Very Large TV")
                     && !item.getItemName().equals("Bicycle")
@@ -74,7 +75,7 @@ public class Removal
         }
         double price = 0.0;
 
-        //Get the actual price for the meterage
+        //Get the actual price for the cubage
         price += fragileCubage * getPriceList().get("price_per_fragile_meter");
         price += normalCubage * getPriceList().get("price_per_meter");
 
@@ -86,6 +87,7 @@ public class Removal
         {
             price += getPriceList().get("price_per_overnight_stay");
         }
+        //Gets a price per mile based on average distances travelled from the southern British depot
         if(getCountryFrom() == 0) //If from the UK
         {
             if(getRegionFrom() == 0) //if in North
@@ -95,6 +97,7 @@ public class Removal
             else if( getRegionFrom() == 3) //if in East
                 price += (68 * getPriceList().get("price_per_mile"));
         }
+        //GEts a price per mile based on average distances travelled from the southern Spanish depot
         if(getCountryFrom() == 1) // If from Spain
         {
             if( getRegionFrom() == 0) //if in North
@@ -124,6 +127,7 @@ public class Removal
         }
 
 
+        //Adds the amount extra required for amounts of hours of having a porter
         if(needPorter || totalCubage >= 10.00) {
             price += getPriceList().get("price_per_porter_minimum");
             if (totalCubage >= 14 && totalCubage < 18)
@@ -153,7 +157,7 @@ public class Removal
      */
     public MoveItem getItem()
     {
-        int index = 0;
+        int index;
         if(inventory.isEmpty())
             return null;
         else{

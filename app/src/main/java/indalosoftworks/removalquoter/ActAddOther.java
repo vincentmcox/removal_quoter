@@ -12,7 +12,10 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
-
+/**
+ * Activity that defines a way to set all variables in MoveItem from the
+ * user interface.
+ */
 public class ActAddOther extends ActionBarActivity {
     EditText itemNameView, itemWidthView, itemHeightView, itemDepthView, itemAmount;
     Switch switchView;
@@ -28,6 +31,7 @@ public class ActAddOther extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_add_other);
 
+        //Get the global QuoteApp reference
         app = (QuoteApp) getApplicationContext();
 
         isFragile = 0;
@@ -51,6 +55,7 @@ public class ActAddOther extends ActionBarActivity {
                 double height = 0.0;
                 double depth = 0.0;
                 int amount = 0;
+                //Tests for empty string inputs and controls
                 if (itemWidthView.getText().toString().equals(""))
                 {
                     Toast toast = Toast.makeText(getBaseContext(), "Enter something for width!", Toast.LENGTH_LONG);
@@ -59,6 +64,7 @@ public class ActAddOther extends ActionBarActivity {
                     else {
                     width = Integer.parseInt(itemWidthView.getText().toString());
                     }
+
                 if (itemHeightView.getText().toString().equals(""))
                 {
                     Toast toast = Toast.makeText(getBaseContext(), "Enter something for height!", Toast.LENGTH_LONG);
@@ -67,12 +73,12 @@ public class ActAddOther extends ActionBarActivity {
                 else {
                     height = Integer.parseInt(itemHeightView.getText().toString());
                     }
+
                 if (itemDepthView.getText().toString().equals(""))
                 {
                     Toast toast = Toast.makeText(getBaseContext(), "Enter something for depth!", Toast.LENGTH_LONG);
                     toast.show();
                 }
-
                 else {
                     depth = Integer.parseInt(itemDepthView.getText().toString());
                 }
@@ -84,6 +90,7 @@ public class ActAddOther extends ActionBarActivity {
                     amount = Integer.parseInt(itemAmount.getText().toString());
                 }
 
+                //Check item dimensions are fit for transport, then input them into the app object.
                 if(isItemFit((int)height,(int)width,(int)depth,amount,itemName))
                 {
                     app.addItemDetails(itemName,(double)width,(double)height,(double)depth,isFragile,amount);
@@ -128,6 +135,16 @@ public class ActAddOther extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Tests to see if the item is fit for transport. If item is unfit, returns false and
+     * displays an appropriate Toast message.
+     * @param height int height of item in cm
+     * @param width int width of item in cm
+     * @param depth int depth of item in cm
+     * @param amount int amount of the item
+     * @param name String name of the item
+     * @return true if item is fit for transport, false if item is unfit
+     */
     private boolean isItemFit(int height, int width, int depth, int amount, String name)
     {
         boolean result = true;

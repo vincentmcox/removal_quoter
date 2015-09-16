@@ -26,6 +26,7 @@ public class ActFurnitureBed extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_furniture_bed);
 
+        //Get reference to the global app variable
         app = (QuoteApp) getApplicationContext();
 
         //get ui references
@@ -34,7 +35,7 @@ public class ActFurnitureBed extends ActionBarActivity {
         queenBedButton = (Button) findViewById(R.id.btn_bed_queen);
         kingBedButton = (Button) findViewById(R.id.btn_bed_king);
 
-        //initialise listeners
+        //initialise listeners and define inputs based on standard bed sizes
         singleListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

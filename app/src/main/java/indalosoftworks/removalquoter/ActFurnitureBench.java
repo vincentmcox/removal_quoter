@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
+/**
+ * Activity that provides a way to add a bench type item to the removal
+ */
 public class ActFurnitureBench extends ActionBarActivity {
     //Declarations for ui elements
     Button enterButton;
@@ -28,6 +30,8 @@ public class ActFurnitureBench extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_furniture_bench);
+
+        //Get reference to the global app variable
         app = (QuoteApp) getApplicationContext();
 
         height = -1;
@@ -44,6 +48,7 @@ public class ActFurnitureBench extends ActionBarActivity {
         enterButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Check for empty input strings
                 if (heightEntry.getText().toString().equals(""))
                 {
                     Toast toast = Toast.makeText(getBaseContext(), "Enter a height", Toast.LENGTH_LONG);
@@ -71,6 +76,8 @@ public class ActFurnitureBench extends ActionBarActivity {
                 {
                     depth = Integer.parseInt(depthEntry.getText().toString());
                 }
+
+                //Check item dimensions are fit for transport, then input them into the app object.
                 if(app.isItemFitForTransport(height, width, depth, getApplicationContext()))
                 {
                     app.addItemDetails("Bench", width, height, depth, 0, 1);

@@ -23,11 +23,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ActRegisterLogin"
-            android:label="@string/title_activity_act_register_login"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
-        </activity>
-        <activity
             android:name=".ActNQuote"
             android:label="@string/title_activity_act_nquote"
             android:parentActivityName=".MainActivity" >
@@ -50,14 +45,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="indalosoftworks.removalquoter.ActNQuote" />
-        </activity>
-        <activity
-            android:name=".ActDisclaimer"
-            android:label="@string/title_activity_act_disclaimer"
-            android:parentActivityName=".ActPQuote" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="indalosoftworks.removalquoter.ActPQuote" />
         </activity>
         <activity
             android:name=".ActAddItem"

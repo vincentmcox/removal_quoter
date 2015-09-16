@@ -8,7 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-
+/**
+ * Activity that specifies a way to add a fridge type object to the removal.
+ */
 public class ActFurnitureFridge extends ActionBarActivity {
     //declarations
     Button twoDoorButton;
@@ -23,6 +25,8 @@ public class ActFurnitureFridge extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_furniture_fridge);
+
+        //get reference to the global app variable
         app = (QuoteApp) getApplicationContext();
 
         //get ui references
@@ -30,7 +34,7 @@ public class ActFurnitureFridge extends ActionBarActivity {
         fridgeFreezerButton = (Button) findViewById(R.id.btn_fridge_freezer);
         underCounterButton = (Button) findViewById(R.id.btn_under_counter_fridge);
 
-        //Initialise listeners
+        //Initialise listeners and speficy inputs for each item
         twoDoorListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

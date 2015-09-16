@@ -5,7 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Created by Vincent on 02/09/2015.
+ * The Client class represents a real world client, storing relevant
+ * data for processing in the Removal and QuoteApp classes
  */
 public class Client {
     private String name;

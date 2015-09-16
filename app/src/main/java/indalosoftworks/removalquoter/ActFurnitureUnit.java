@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
+/**
+ * Activity that provides a way to add a Unit item to the removal
+ */
 public class ActFurnitureUnit extends ActionBarActivity {
 
     //Declarations for ui elements
@@ -29,8 +31,11 @@ public class ActFurnitureUnit extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_furniture_unit);
+
+        //GEt reference to the global app variable
         app = (QuoteApp) getApplicationContext();
 
+        // Initialise dimensions to -1
         height = -1;
         depth = -1;
         width = -1;
@@ -45,6 +50,7 @@ public class ActFurnitureUnit extends ActionBarActivity {
         enterButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Check inputs for empty strings
                 if (heightEntry.getText().toString().equals(""))
                 {
                     Toast toast = Toast.makeText(getBaseContext(), "Enter a height", Toast.LENGTH_LONG);
@@ -72,6 +78,8 @@ public class ActFurnitureUnit extends ActionBarActivity {
                 {
                     depth = Integer.parseInt(depthEntry.getText().toString());
                 }
+
+                //Check item dimensions are fit for transport, then input them into the app object.
                 if(app.isItemFitForTransport(height, width, depth, getApplicationContext()))
                 {
                     app.addItemDetails("Unit", (double)width, (double)height, (double)depth, 0, 1);

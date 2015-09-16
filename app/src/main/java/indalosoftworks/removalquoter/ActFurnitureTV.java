@@ -10,7 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
+/**
+ * Activity to add a TV to the removal. These are not input as fragile items but
+ * based on a set price for TV sizes.
+ */
 public class ActFurnitureTV extends ActionBarActivity {
     //Declarations for ui elements
     Button smallButton, medButton, largeButton, vLargeButton;
@@ -23,6 +26,7 @@ public class ActFurnitureTV extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_furniture_tv);
 
+        //Get reference to the global app variable
         app = (QuoteApp) getApplicationContext();
 
         //get ui references
@@ -32,7 +36,7 @@ public class ActFurnitureTV extends ActionBarActivity {
         vLargeButton = (Button) findViewById(R.id.btn_vLargeTV);
 
 
-        //set up listeners
+        //set up listeners and specify item input details
         smallListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

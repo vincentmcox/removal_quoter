@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
+/**
+ * Activity that provides a way to add a chest of drawers item to the removal
+ */
 public class ActFurnitureDrawers extends ActionBarActivity {
     //Declarations for ui elements
     Button enterButton;
@@ -28,6 +30,8 @@ public class ActFurnitureDrawers extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_furniture_drawers);
+
+        //Get reference to the global variable, app
         app = (QuoteApp) getApplicationContext();
 
 
@@ -45,6 +49,7 @@ public class ActFurnitureDrawers extends ActionBarActivity {
         enterButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //check for empty strings
                 if (heightEntry.getText().toString().equals(""))
                 {
                     Toast toast = Toast.makeText(getBaseContext(), "Enter a height", Toast.LENGTH_LONG);
@@ -72,6 +77,8 @@ public class ActFurnitureDrawers extends ActionBarActivity {
                 {
                     depth = Integer.parseInt(depthEntry.getText().toString());
                 }
+
+                //Check item dimensions are fit for transport, then input them into the app object.
                 if(app.isItemFitForTransport(height, width, depth, getApplicationContext()))
                 {
                     app.addItemDetails("Chest of drawers", (double)width, (double)height, (double)depth, 0, 1);

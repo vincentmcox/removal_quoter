@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * Provides a set of data for the Expandable list in ActRoomList
+ *
  * Created by Vincent on 24/08/2015.
  */
 public class ExpandableListDataProvider {

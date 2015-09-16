@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
+/**
+ * Defines the Activity to add a box to the removal
+ */
 public class ActAddBox extends ActionBarActivity {
     //Declarations for ui elements
     Button enterButton;
@@ -29,6 +31,7 @@ public class ActAddBox extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_add_box);
 
+        //get reference to the application
         app = (QuoteApp) getApplicationContext();
 
         height = -1;

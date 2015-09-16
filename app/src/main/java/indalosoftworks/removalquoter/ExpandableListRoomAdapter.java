@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * Extents the BaseExpandableListAdapter to populate the ExpandableList view in
+ * the ActRoomList.
  * Created by Vincent on 24/08/2015.
  */
 public class ExpandableListRoomAdapter extends BaseExpandableListAdapter {

@@ -12,7 +12,9 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-
+/**
+ * Activity that provides a way to add a lamp item to the removal
+ */
 public class ActFurnitureLamp extends ActionBarActivity {
     RadioGroup radioGroup;
     EditText amountEntry;
@@ -28,6 +30,8 @@ public class ActFurnitureLamp extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_furniture_lamp);
+
+        //Get reference to the global app variable
         app = (QuoteApp) getApplicationContext();
 
         //get ui references
@@ -40,13 +44,17 @@ public class ActFurnitureLamp extends ActionBarActivity {
             public void onClick(View v) {
                 amountEntered = 0;
 
+                //Check for empty string
                 if(amountEntry.getText().toString().equals("")) {
                     Toast toast = Toast.makeText(getBaseContext(), "Must enter an amount", Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 else {
+                    //get amount
                     amountEntered = Integer.parseInt(amountEntry.getText().toString());
+                    //Check that the radio buttons are checked and the amount is correct
                     if (ensureAmountCorrect()) {
+                        //Get the radiogroup button checked
                         if (radioGroup.getCheckedRadioButtonId() == R.id.radio_tall_lamp) {
                             width = 35;
                             depth = 35;
@@ -58,6 +66,7 @@ public class ActFurnitureLamp extends ActionBarActivity {
                             height = 50;
                             nameString = "desk lamp";
                         }
+                        //Add details to the app object removal
                         app.addItemDetails(nameString, width, height, depth, 1, amountEntered);
                         startActivity(new Intent(getApplicationContext(), ActPQuote.class));
 
@@ -96,6 +105,12 @@ public class ActFurnitureLamp extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Checks that a radio button is checked and that the amount is appropriate
+     * for a removal. If false, displays a Toast message with information as to
+     * what went wrong.
+     * @return true if input is ok, false otherwise
+     */
     private boolean ensureAmountCorrect()
     {
         boolean result = true;

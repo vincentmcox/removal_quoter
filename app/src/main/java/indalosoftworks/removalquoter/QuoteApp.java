@@ -15,13 +15,10 @@ import java.util.List;
  * Class to extend Application in order to maintain session storage of
  * data that needs not to persist between app runs.
  *
- *
  * Created by Vincent on 26/07/2015.
  */
 public class QuoteApp extends Application
 {
-
-
     private InventoryDataSource dataSource;
     private Client client;
     private Removal removal;
@@ -35,16 +32,14 @@ public class QuoteApp extends Application
         // Declare and set up the price list for the app - in a full implementation this would
         // be taken from a server database.
         priceList = new HashMap<>();
-        priceList.put("price_per_meter", 130.0); //PRice per cubic meter of normal items
-        priceList.put("price_per_porter_minimum", 60.0); //Base cost of getting a porter
-        priceList.put("price_per_porter_hourly", 12.0); // Hourly cost of getting a porter
-        priceList.put("price_per_fragile_meter", 195.0); // Price per cubic meter of fragile items
-        priceList.put("price_per_overnight_stay", 75.0); // Price levied for an overnight stay
-        priceList.put("price_per_mile", 0.5); //Price per mile from a depot for over 50
+        priceList.put("price_per_meter", 130.0);            // Price per cubic meter of normal items
+        priceList.put("price_per_porter_minimum", 60.0);    // Base cost of getting a porter
+        priceList.put("price_per_porter_hourly", 12.0);     // Hourly cost of getting a porter
+        priceList.put("price_per_fragile_meter", 195.0);    // Price per cubic meter of fragile items
+        priceList.put("price_per_overnight_stay", 75.0);    // Price levied for an overnight stay
+        priceList.put("price_per_mile", 0.5);               //Price per mile from a depot for over 50
         // Must come after price list initialisation as it takes priceList as an arg.
         removal = new Removal(priceList);
-
-
 
         super.onCreate();
     }
@@ -53,6 +48,7 @@ public class QuoteApp extends Application
     public void onCreate()
     {
 
+        //Set up the Data Access Object.
         dataSource = new InventoryDataSource(this);
         try {
             dataSource.open();
@@ -61,6 +57,8 @@ public class QuoteApp extends Application
         {
             Log.w(e.toString() + ":", "Exception thrown at Application.");
         }
+        // Get information from the database if there are already items in the inventory and a
+        // quote has taken place.
         if(setQuoted())
         {
             removal.setInventory(dataSource.getInventory());
@@ -72,25 +70,12 @@ public class QuoteApp extends Application
 
 
 
-//    public void setPriceDetails()
-//    {
-//        database.addPricingDetails("price_per_meter", 130); //PRice per cubic meter of normal items
-//        database.addPricingDetails("price_per_porter_minimum", 60); //Base cost of getting a porter
-//        database.addPricingDetails("price_per_porter_hourly", 12); // Hourly cost of getting a porter
-//        database.addPricingDetails("price_per_fragile_meter", 195); // Price per cubic meter of fragile items
-//        database.addPricingDetails("price_per_overnight_stay", 75); // Price levied for an overnight stay
-//        database.addPricingDetails("price_per_mile", 0.5); //Price per mile from a depot for over 50
-//
-//        app.setPriceList(database.getPricingListFromDatabase());
-//    }
 
-    //May need to pass a context into here
     public void saveClientToDatabase(Client aClient)
     {
 
     }
 
-    //May need to pass a context again
     public void getClientFromDatabase()
     {
         if(dataSource.getClientCount() >= 1)
@@ -153,10 +138,7 @@ public class QuoteApp extends Application
         boolean isFragile;
         double cube;
         cube = (width*height*depth)/1000000;
-        if(isFragileInt == 0)
-            isFragile = false;
-        else
-            isFragile = true;
+        isFragile = isFragileInt != 0;
 
             MoveItem item = new MoveItem(cube, width, height, depth, itemName, number, isFragile);
 
@@ -166,14 +148,14 @@ public class QuoteApp extends Application
     }
 
     /**
-     * This is an inefficient and unelegant solution to keeping both the Removal and the Database
+     * This is an inefficient and inelegant solution to keeping both the Removal and the Database
      * in sync. In reality a better thought-out refactor would be more effective at solving this
      * problem.
      * @param index index of item to be deleted
      */
     public void deleteItem(int index)
     {
-        //Some strange logic here designed to prevent IndexOutOfBounds errors, and keep both the
+        // Some strange logic here designed to prevent IndexOutOfBounds errors, and keep both the
         // database and the Removal object's _id attributes in line with each other.
 
         // Remove item from Removal first. Since the _id produced by the database starts at 1 and
@@ -213,14 +195,20 @@ public class QuoteApp extends Application
     {
         int result = -1;
         region = region.toUpperCase();
-        if(region.equals("NORTH"))
-            result = 0;
-        else if (region.equals("WEST"))
-            result = 1;
-        else if (region.equals("SOUTH"))
-            result = 2;
-        else if (region.equals("EAST"))
-            result = 3;
+        switch (region) {
+            case "NORTH":
+                result = 0;
+                break;
+            case "WEST":
+                result = 1;
+                break;
+            case "SOUTH":
+                result = 2;
+                break;
+            case "EAST":
+                result = 3;
+                break;
+        }
         return result;
     }
 

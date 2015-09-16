@@ -8,7 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-
+/**
+ * Activity that provides input for a sofa item into the removal
+ */
 public class ActFurnitureSofa extends ActionBarActivity {
     //Declarations
     Button twoSofaButton;
@@ -21,11 +23,15 @@ public class ActFurnitureSofa extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_furniture_sofa);
+
+        //Get reference to the global app variable
         app = (QuoteApp) getApplicationContext();
 
+        //Get button ui references
         twoSofaButton = (Button) findViewById(R.id.btn_sofa_two);
         threeSofaButton = (Button) findViewById(R.id.btn_sofa_three);
 
+        //Set up listeners and specity item inputs
         twoSofaListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,6 +47,7 @@ public class ActFurnitureSofa extends ActionBarActivity {
             }
         };
 
+        //attach listeners to buttons
         twoSofaButton.setOnClickListener(twoSofaListener);
         threeSofaButton.setOnClickListener(threeSofaListener);
 

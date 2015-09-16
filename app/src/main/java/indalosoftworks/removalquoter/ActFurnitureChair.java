@@ -11,7 +11,9 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-
+/**
+ * Activity that provides a way to add a chair item or items to the removal
+ */
 public class ActFurnitureChair extends ActionBarActivity {
     //Declarations
     RadioGroup radioGroup;
@@ -41,14 +43,18 @@ public class ActFurnitureChair extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
+                //Check for empty string input
                 if(amountEntry.getText().toString().equals(""))
                 {
                     Toast toast = Toast.makeText(getBaseContext(), "Must enter an amount!", Toast.LENGTH_LONG);
                     toast.show();
                 }
                 else {
+                    //Get the amount
                     amountEntered = Integer.parseInt(amountEntry.getText().toString());
-                    if(ensureAmountCorrect()) {
+                    //Check for correct amount and that a radio button is selected
+                    if(isRadioAndAmountInputOK()) {
+                        //Get the checked radio button
                         switch (radioGroup.getCheckedRadioButtonId()) {
                             case R.id.radio_armchair:
                                 width = 89;
@@ -69,6 +75,7 @@ public class ActFurnitureChair extends ActionBarActivity {
                                 nameString = "Dining Chair";
                                 break;
                         }
+                        //Add the details to the app object
                         app.addItemDetails(nameString, width, height, depth, 0, amountEntered);
                         startActivity(new Intent(getApplicationContext(), ActPQuote.class));
                     }
@@ -106,7 +113,12 @@ public class ActFurnitureChair extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean ensureAmountCorrect()
+    /**
+     * Checks that a radio button is checked and that the amount is within the proper boundaries
+     * for transport. If input is not okay, displays a toast informing the user.
+     * @return true if input is ok, false otherwise
+     */
+    private boolean isRadioAndAmountInputOK()
     {
         boolean result = true;
 

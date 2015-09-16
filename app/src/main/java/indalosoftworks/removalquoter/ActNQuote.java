@@ -1,11 +1,9 @@
 package indalosoftworks.removalquoter;
 
-import android.content.Context;
+
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +13,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-
+/**
+ * Activity that gets Client details from the user and inputs them into the app before starting the
+ * ActPQuote Activity.
+ */
 public class ActNQuote extends ActionBarActivity {
     //declarations
     Button gotoButton, testButton;
@@ -33,6 +34,7 @@ public class ActNQuote extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_nquote);
 
+        //Get reference to the global app variable
         app = (QuoteApp) getApplicationContext();
 
         //If Client is not null, go to ActPQuote
@@ -72,15 +74,10 @@ public class ActNQuote extends ActionBarActivity {
                 toAddressString = toAddress.getText().toString();
                 mobilePhoneString = mobilePhone.getText().toString();
                 emailString = email.getText().toString();
-                //These not needed because of the spinner listeners.
-                //fromCountry = fromCountrySpinner.getSelectedItem().toString();
-                //toCountry = toCountrySpinner.getSelectedItem().toString();
-                //fromRegion = fromRegionSpinner.getSelectedItem().toString();
-                //toRegion = toRegionSpinner.getSelectedItem().toString();
 
                 //Ensure that the fields are filled in
-                if(name.equals("") || fromAddress.equals("") || toAddress.equals("")  ||
-                        mobilePhone.equals("") || email.equals("") ||
+                if(nameString.equals("") || fromAddressString.equals("") || toAddressString.equals("")  ||
+                        mobilePhoneString.equals("") || emailString.equals("") ||
                         (fromCountry.equals("UK") && toCountry.equals("UK")) ||
                         (toCountry.equals("Spain") && fromCountry.equals("Spain"))    )
                 {
@@ -102,6 +99,8 @@ public class ActNQuote extends ActionBarActivity {
                 }
             }
         };
+
+        //Button listener input for testing purposes
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,7 +117,7 @@ public class ActNQuote extends ActionBarActivity {
             }
         });
 
-        //listeners for the spinners that assign the selected item string to the respective
+        // Listeners for the spinners that assign the selected item string to the respective
         // String variable in the class.
         fromCountrySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

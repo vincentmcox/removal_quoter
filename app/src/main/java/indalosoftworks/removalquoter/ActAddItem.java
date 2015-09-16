@@ -8,7 +8,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-
+/**
+ * Defines the Activity to choose the type of item to input. Contains only four buttons and acts
+ * like a menu.
+ */
 public class ActAddItem extends ActionBarActivity {
 
     Button boxButton;
@@ -57,6 +60,7 @@ public class ActAddItem extends ActionBarActivity {
             }
         };
 
+        //Set listeners to buttons
         boxButton.setOnClickListener(boxLstnr);
         vehicleButton.setOnClickListener(vehicleLstnr);
         furnitureButton.setOnClickListener(furnitureLstnr);

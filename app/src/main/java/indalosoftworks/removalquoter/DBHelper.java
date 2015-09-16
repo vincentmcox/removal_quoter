@@ -44,6 +44,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "inventory.db";
     private static final int DATABASE_VERSION = 2;
 
+    //Table creation strings
     private static final String INVENTORY_CREATION = "create table " +
             TABLE_INVENTORY + "(" + KEY_ID +
             " integer primary key, " +
@@ -93,12 +94,20 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * Deletes the TABLE_INVENTORY if it exists, then creates a new table
+     * @param db database to be operated on
+     */
     public void reInitialiseInventoryTable(SQLiteDatabase db)
     {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_INVENTORY);
         db.execSQL(INVENTORY_CREATION);
     }
 
+    /**
+     * Delets the TABLE_CLIENT if it exists, then creates a new table
+     * @param db database to be operated on
+     */
     public void dropClientTable(SQLiteDatabase db)
     {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLIENT);

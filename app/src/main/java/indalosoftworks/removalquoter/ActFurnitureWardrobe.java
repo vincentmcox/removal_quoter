@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
+/**
+ * Activity that specifies a way to add a wardrobe item to the removal
+ */
 public class ActFurnitureWardrobe extends ActionBarActivity {
     //Declarations for ui elements
     Button enterButton;
@@ -28,8 +30,11 @@ public class ActFurnitureWardrobe extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_furniture_wardrobe);
+
+        //Get reference to the global app variable
         app = (QuoteApp) getApplicationContext();
 
+        //Initialise dimensions to -1
         height = -1;
         depth = -1;
         width = -1;
@@ -44,6 +49,7 @@ public class ActFurnitureWardrobe extends ActionBarActivity {
         enterButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Check for empty string inputs
                 if (heightEntry.getText().toString().equals(""))
                 {
                     Toast toast = Toast.makeText(getBaseContext(), "Enter a height", Toast.LENGTH_LONG);
@@ -71,6 +77,8 @@ public class ActFurnitureWardrobe extends ActionBarActivity {
                 {
                     depth = Integer.parseInt(depthEntry.getText().toString());
                 }
+
+                //Check item dimensions are fit for transport, then input them into the app object.
                 if(app.isItemFitForTransport(height, width, depth, getApplicationContext()))
                 {
                     app.addItemDetails("Wardrobe", (double)width, (double)height, (double)depth, 0, 1);

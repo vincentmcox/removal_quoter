@@ -10,8 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-// Use Integer.parseInt(myEditText.getText().toString(); for getting numeric values for processing
-
+/**
+ * Activity that allows UI input of a BBQ type removal item
+ */
 public class ActFurnitureBBQ extends ActionBarActivity {
     //Declarations for ui elements
     Button enterButton;
@@ -29,6 +30,8 @@ public class ActFurnitureBBQ extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_furniture_bbq);
+
+        //Get reference to global app variable.
         app = (QuoteApp) getApplicationContext();
 
         height = -1;
@@ -45,6 +48,7 @@ public class ActFurnitureBBQ extends ActionBarActivity {
         enterButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Test for empty input strings
                 if (heightEntry.getText().toString().equals(""))
                 {
                     Toast toast = Toast.makeText(getBaseContext(), "Enter a height", Toast.LENGTH_LONG);
@@ -72,6 +76,8 @@ public class ActFurnitureBBQ extends ActionBarActivity {
                 {
                     depth = Integer.parseInt(depthEntry.getText().toString());
                 }
+
+                //Check item dimensions are fit for transport, then input them into the app object.
                 if(app.isItemFitForTransport(height, width, depth, getApplicationContext()))
                 {
                     app.addItemDetails("BBQ", (double)width, (double)height, (double)depth, 0, 1);

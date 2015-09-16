@@ -1,7 +1,7 @@
 package indalosoftworks.removalquoter;
 
 /**
- *
+ * Class that models an item that can be transported in the real world.
  */
 public class MoveItem {
     private double cube;
@@ -80,10 +80,15 @@ public class MoveItem {
     public void set_id(int _id) {
         this._id = _id;
     }
+
+    /**
+     * Gets an integer value from a boolean. If true = 1, if false = 0
+     * @return 1 if true, 2 if false
+     */
     public int getIntFragile()
     {
         int result = 0;
-        if(isFragile() == true)
+        if(isFragile())
             result =1;
         return result;
     }

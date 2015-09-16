@@ -8,7 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-
+/**
+ * Activity that allows a specified vehicle to be added to the removal
+ */
 public class ActVehicle extends ActionBarActivity {
     //Declarations
     Button quadBikeButton, bicycleButton, scooterButton, motorbikeButton;
@@ -19,6 +21,8 @@ public class ActVehicle extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_vehicle);
+
+        //GEt reference to the global app variable
         app = (QuoteApp) getApplicationContext();
 
         //Get ui refs
@@ -27,7 +31,7 @@ public class ActVehicle extends ActionBarActivity {
         scooterButton = (Button) findViewById(R.id.btn_mobilityScooter);
         motorbikeButton = (Button) findViewById(R.id.btn_motorbike);
 
-        //Set up listeners
+        //Set up listeners and inputs
         quadBikeListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +62,7 @@ public class ActVehicle extends ActionBarActivity {
             }
         };
 
-        //Attach listeners to views
+        //Attach listeners to buttons
         quadBikeButton.setOnClickListener(quadBikeListener);
         bicycleButton.setOnClickListener(bicycleListener);
         motorbikeButton.setOnClickListener(motorbikeListener);

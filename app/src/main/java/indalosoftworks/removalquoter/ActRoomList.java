@@ -14,7 +14,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
+/**
+ * Activity that displays an expandable list of rooms and furniture.
+ * The furniture list items point to a furniture add activity
+ */
 public class ActRoomList extends ActionBarActivity {
 
     //declarations
@@ -29,10 +32,14 @@ public class ActRoomList extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_room_list);
 
+        //GEt UI reference
         overList = (ExpandableListView) findViewById(R.id.expandableListView);
+
+        // set up display information
         rooms = ExpandableListDataProvider.getData();
         furniture = new ArrayList<>(rooms.keySet());
 
+        // set up adapter
         adapter = new ExpandableListRoomAdapter(this, rooms, furniture);
         overList.setAdapter(adapter);
 
@@ -160,6 +167,7 @@ public class ActRoomList extends ActionBarActivity {
                 }
                 else
                 {
+                    //This should never show
                     Toast toast = Toast.makeText(getApplicationContext(),
                             thisChild + " didn't get picked up.",
                             Toast.LENGTH_SHORT);

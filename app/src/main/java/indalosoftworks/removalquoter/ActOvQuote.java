@@ -17,7 +17,9 @@ import org.w3c.dom.Text;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
-
+/**
+ * Activity that displays the quote items and the final quoted price for the removal.
+ */
 public class ActOvQuote extends ActionBarActivity {
     //declarations
     ListView removalList;
@@ -30,8 +32,11 @@ public class ActOvQuote extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_ov_quote);
+
+        //Get reference to the global app variable
         app = (QuoteApp) getApplicationContext();
 
+        //get ui references to buttons
         menuButton = (Button) findViewById(R.id.btn_Ov_MainMenu);
         clientButton = (Button) findViewById(R.id.btn_Ov_ShowClient);
 
@@ -40,18 +45,20 @@ public class ActOvQuote extends ActionBarActivity {
         populateRemovalList();
         //Get textView callback
         showPrice = (TextView) findViewById(R.id.textView_price);
-        //format for the decimals
+        //format for the decimal price display
         DecimalFormat priceFormat = new DecimalFormat("#.##");
         priceFormat.setRoundingMode(RoundingMode.HALF_UP);
         //set the display string
         showPrice.setText("£" + priceFormat.format(app.getQuotePrice()));
 
+        //Set up listeners
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
+        // Test button listener
         clientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +98,9 @@ public class ActOvQuote extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Populates the removal list by instantiating a new ArrayAdapter.
+     */
     public void populateRemovalList() {
         removalList = (ListView) findViewById(R.id.listView_removal);
         moveListAdapter = new ArrayAdapter<MoveItem>(this, android.R.layout.simple_list_item_1, app.getList());
